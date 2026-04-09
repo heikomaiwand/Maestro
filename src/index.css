@@ -1,0 +1,454 @@
+:root {
+  --sys-color-surface: #ffffff;
+  --sys-color-surface-container-high: #e9eef6;
+  --sys-color-primary: #0b57d0;
+  --sys-color-primary-container: #d3e3fd;
+  --sys-color-on-surface: #1f1f1f;
+  --sys-color-on-surface-variant: #444746;
+  --sys-color-outline-variant: #c4c7c5;
+  
+  --font-sans: 'Google Sans Flex', 'Google Sans Text', 'Google Sans', 'Inter', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--sys-color-surface-container-high);
+  color: var(--sys-color-on-surface);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure standard Material Icons (Outlined and Filled) are absolutely preserved everywhere */
+.material-symbols-outlined,
+.material-symbols-filled {
+  font-family: 'Material Symbols Outlined' !important;
+}
+
+.material-symbols-filled {
+  font-variation-settings: 'FILL' 1 !important;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.top-bar {
+  background-color: var(--sys-color-surface);
+  border-bottom: 1px solid var(--sys-color-outline-variant);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  height: 49px;
+  box-sizing: border-box;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden; /* Scroll inside columns */
+}
+
+.left-pane {
+  display: flex;
+  flex: 1;
+  border-right: 1px solid var(--sys-color-outline-variant);
+}
+
+.column1, .column2 {
+  flex: 1;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+}
+
+.divider-vertical {
+  width: 1px;
+  background-color: var(--sys-color-outline-variant);
+  height: calc(100% - 48px);
+  align-self: center;
+}
+
+.column3 {
+  flex: 1.5;
+  background-color: var(--sys-color-surface);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.05);
+  overflow-y: auto;
+}
+
+/* Typography & Elements */
+.title-medium {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sys-color-on-surface-variant);
+}
+
+.list-item {
+  border-top: 1px solid var(--sys-color-outline-variant);
+  padding: 8px;
+  font-size: 12px;
+}
+
+.action-card {
+  background-color: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-outline-variant);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-card.selected {
+  background-color: var(--sys-color-primary-container);
+  border: 2px solid var(--sys-color-primary);
+}
+
+/* Buttons (Material Design 3 Architecture) */
+.btn {
+  border-radius: 100px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+}
+
+/* Sizes */
+.btn-small {
+  padding: 6px 16px;
+  font-size: 13px;
+  height: 32px;
+}
+
+.btn-medium {
+  padding: 10px 24px;
+  font-size: 14px;
+  height: 40px;
+}
+
+.btn-large {
+  padding: 14px 32px;
+  font-size: 16px;
+  height: 48px;
+}
+
+/* Color Profiles */
+.btn-primary {
+  background-color: var(--sys-color-primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0842a0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.btn-tonal {
+  background-color: var(--sys-color-primary-container);
+  color: #0b57d0;
+}
+
+.btn-tonal:hover:not(:disabled) {
+  background-color: #b3d0ff;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--sys-color-outline-variant);
+  color: var(--sys-color-on-surface);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: rgba(31, 31, 31, 0.04);
+}
+
+.btn-text {
+  background-color: transparent;
+  color: var(--sys-color-primary);
+  padding: 6px 12px;
+}
+
+.btn-text:hover:not(:disabled) {
+  background-color: rgba(31, 31, 31, 0.04);
+}
+
+/* GM3 Spec Disabled States */
+.btn:disabled {
+  background-color: rgba(31, 31, 31, 0.12) !important;
+  color: rgba(31, 31, 31, 0.38) !important;
+  border-color: transparent !important;
+  cursor: default !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+.btn-text:disabled {
+  background-color: transparent !important;
+}
+
+/* Tabs */
+.tab-group {
+  display: flex;
+  border-bottom: 1px solid var(--sys-color-outline-variant);
+  padding: 0 24px;
+  gap: 16px;
+  overflow-x: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.tab-group::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.tab-scroll-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.scroll-gradient {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-gradient.left {
+  left: 0;
+  background: linear-gradient(to right, var(--sys-color-surface), rgba(255, 255, 255, 0));
+}
+
+.scroll-gradient.right {
+  right: 0;
+  background: linear-gradient(to left, var(--sys-color-surface), rgba(255, 255, 255, 0));
+}
+
+.scroll-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--sys-color-surface-container-highest);
+  color: var(--sys-color-on-surface);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: var(--sys-elevation-1);
+  transition: opacity 0.3s ease;
+}
+
+.scroll-arrow-btn:hover {
+  background-color: var(--sys-color-secondary-container);
+}
+
+.scroll-arrow-btn.left {
+  left: 4px;
+}
+
+.scroll-arrow-btn.right {
+  right: 4px;
+}
+
+
+.tab {
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sys-color-on-surface-variant);
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+}
+
+.tab.active {
+  color: var(--sys-color-primary);
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 2px;
+  right: 2px;
+  height: 3px;
+  background-color: var(--sys-color-primary);
+  border-radius: 3px 3px 0 0;
+}
+
+/* Zero State Overlay */
+.zero-state-overlay {
+  position: absolute;
+  top: 0; /* Cover full screen */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(233, 238, 246, 0.9); /* 90% opaque light blue */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.zero-state-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 760px;
+  position: relative; /* Context for absolute children */
+}
+
+.zero-state-input-card {
+  background-color: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-outline-variant);
+  border-radius: 32px;
+  padding: 16px;
+  width: 100%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.zero-state-textarea {
+  flex: 1;
+  border: none;
+  resize: none;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--sys-color-on-surface);
+  outline: none;
+  padding: 8px;
+}
+
+.zero-state-textarea::placeholder {
+  color: var(--sys-color-on-surface-variant);
+  opacity: 0.7;
+}
+
+.zero-state-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.zero-state-footer {
+  font-size: 12px;
+  color: var(--sys-color-on-surface-variant);
+  text-align: center;
+  max-width: 600px;
+}
+
+.zero-state-link {
+  font-size: 12px;
+  color: var(--sys-color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn-icon-primary {
+  background-color: var(--sys-color-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Reset mode for lower opacity */
+.zero-state-overlay.reset-mode {
+  background-color: rgba(233, 238, 246, 0.7); /* 70% opaque */
+}
+
+/* Floating close button overhanging the top-right corner */
+.zero-state-close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background-color: #ffffff;
+  border: 1px solid var(--sys-color-outline-variant);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 10;
+  transition: background-color 0.2s ease;
+}
+
+.zero-state-close-btn:hover {
+  background-color: #e8eaed; /* Solid light gray fill to prevent transparency */
+}
+
+/* Custom Tooltip for Signals */
+.signal-row {
+  position: relative;
+}
+
+.signal-tooltip {
+  position: fixed;
+  width: 240px;
+  background-color: white;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 12px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  pointer-events: none; /* Don't block mouse movements */
+  font-size: 13px;
+  line-height: 1.4;
+  animation: tooltipFadeIn 0.2s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
