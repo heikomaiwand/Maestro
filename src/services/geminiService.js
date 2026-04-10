@@ -26,7 +26,7 @@ Schema:
       "id": 1,
       "name": "Location",
       "value": "Home",
-      "category": "User signals", // Allowed categories: "User signals", "Environmental context", "Relevant preferences"
+      "category": "User signals", // Allowed categories: "Explicit input", "User signals", "Environmental context", "Relevant preferences"
       "sources": ["Phone location", "Maps history"],
       "confidence": 0.95,
       "whyItMatters": "Helps determine which physical devices are nearby for alerts."
@@ -35,6 +35,7 @@ Schema:
   "actions": [
     {
       "id": 1,
+      "type": "Proactive Action", // MUST be either "Proactive Action" or "Proactive Suggestion"
       "title": "Turn on lights",
       "why": "It is dark and you are arriving home.",
       "urgency": 0.5,
@@ -47,10 +48,14 @@ Schema:
 }
 
 Guidelines for Reasoning:
-1. **Context Engine (Signals)**: List all potential signals and sources that might be relevant. Go WIDE. Consider physical devices, wearables, biometrics, search history, shared lists, home sensors, traffic, calendar.
-2. **Recommendation Engine (Actions)**: Based on the signals, propose 2-3 high-value, realistic actions. Tie them to specific surfaces.
+1. **Context Engine (Signals)**: Categorize into "Explicit input", "User signals", "Environmental context", or "Relevant preferences".
+   - CRITICAL RULE: Do NOT classify any observation as "Explicit input" unless the prompt explicitly states the user spoke, typed, or commanded an interface. Natural narrations (e.g., "Groceries arrived") are NOT explicit inputs. 
+   - CRITICAL RULE: Do NOT hallucinate "User utterance" as a source unless the scenario actively mentions the user talking.
+
+2. **Recommendation Engine (Actions)**: Propose 3-5 high-value recommendations. You MUST classify each as either a "Proactive Action" (direct execution) or a "Proactive Suggestion" (nudge offering help).
 3. **Allowed Surfaces**: You MUST ONLY use the following surface IDs for the "surfaces" array: ${allowedSurfaces}.
-4. Be imaginative with "Sources" (e.g., Fitbit, GoogleTV proximity, Buds ANC state, Nest Thermostat) to show an impressive vision.`;
+4. Be imaginative with "Sources" to show an impressive vision.`;
+
 
 
   const payload = {
@@ -65,7 +70,9 @@ Guidelines for Reasoning:
     }
   };
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey}`;
+  const activeModel = localStorage.getItem('gemini_model') || 'gemini-2.5-flash';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${activeModel}:generateContent?key=${activeKey}`;
+
 
   try {
     const response = await fetch(url, {
@@ -91,3 +98,59 @@ Guidelines for Reasoning:
     throw error;
   }
 }
+
+export async function fetchOrchestrationFromGemini(action) {
+  let activeKey = localStorage.getItem('gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY;
+  if (!activeKey) return null;
+
+  const systemPrompt = `You are the Orchestration Engine (Loop 2) of a Proactive Gemini Assistant.
+The Context Engine (Loop 1) has decided to propose the following Recommendation:
+
+Title: "${action.title}"
+Type: "${action.type}"
+Why: "${action.why}"
+
+Your job is to decide exactly WHEN, WHERE, and HOW to manifest this recommendation to the user across Google's ecosystem.
+
+Output your response in STRICT JSON format matching the following schema. Do NOT include markdown formatting.
+
+Schema:
+{
+  "when": {
+    "decision": "Immediate Interruption", // Must be: "Immediate Interruption", "Contextual Cue", or "Scheduled Summary"
+    "reasoning": "Explanation of timing based on urgency."
+  },
+  "where": {
+    "surfaces": ["phone_notification", "watch_notification"], // Must use valid surface IDs
+    "reasoning": "Explanation of surface choice (Privacy vs Communal, Audio vs Visual)."
+  },
+  "how": {
+    "style": "Glanceable Summary", // Must be: "Glanceable Summary" or "Verbose Breakdown"
+    "message": "The exact text/audio content adapted to fit the chosen surfaces perfectly."
+  }
+}`;
+
+  const payload = {
+    contents: [{ parts: [{ text: "Execute orchestration reasoning." }] }],
+    systemInstruction: { parts: [{ text: systemPrompt }] }
+  };
+
+  const activeModel = localStorage.getItem('gemini_model') || 'gemini-2.5-flash';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${activeModel}:generateContent?key=${activeKey}`;
+
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw new Error(`Orchestration Error: ${response.status}`);
+    const result = await response.json();
+    return JSON.parse(result.candidates[0].content.parts[0].text);
+  } catch (error) {
+    console.error('Error calling Orchestration API:', error);
+    return null;
+  }
+}
+

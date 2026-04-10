@@ -140,7 +140,7 @@ export const SmartDisplayPreview = ({ action }) => {
                   <div 
                     style={{ 
                       height: '216px', 
-                      backgroundColor: 'var(--lofi-color1)', 
+                      backgroundColor: 'var(--lofi-color2)', 
                       borderRadius: '16px', 
                       padding: '24px', 
                       display: 'flex', 

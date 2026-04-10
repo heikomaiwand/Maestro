@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { SURFACES } from '../config/surfaces';
 import { getSurfacePreviewComponent } from './SurfacePreviews';
 
-export default function PreviewPane({ selectedAction, activeSurface, onSurfaceChange }) {
+export default function PreviewPane({ selectedAction, activeSurface, onSurfaceChange, orchestrationCache = {}, onInfoClick }) {
+
   const scrollRef = useRef(null);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -84,7 +85,10 @@ export default function PreviewPane({ selectedAction, activeSurface, onSurfaceCh
     <div className="column3">
       <div className="title-medium" style={{ textAlign: 'center' }}>Interface preview</div>
       
-      <div className="tab-scroll-wrapper" style={{ margin: '0 -24px' }}>
+      {selectedAction && (
+        <>
+          <div className="tab-scroll-wrapper" style={{ margin: '0 -24px' }}>
+
         {/* Left Fade + Arrow */}
         <div className={`scroll-gradient left`} style={{ opacity: showLeftArrow ? 1 : 0 }} />
         {showLeftArrow && (
@@ -139,11 +143,20 @@ export default function PreviewPane({ selectedAction, activeSurface, onSurfaceCh
         {getSurfacePreviewComponent(activeSurface, selectedAction && selectedAction.surfaces.includes(activeSurface) ? selectedAction : null)}
       </div>
 
-      
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 24px', marginTop: 'auto' }}>
-        <span className="material-symbols-outlined" style={{ cursor: 'pointer' }}>zoom_out_map</span>
-        <span className="material-symbols-outlined" style={{ cursor: 'pointer' }}>info</span>
+        <span className="material-symbols-outlined" style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}>zoom_out_map</span>
+        <span 
+          className="material-symbols-outlined" 
+          style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }} 
+          onClick={onInfoClick}
+          title="View Orchestration Logic"
+        >
+          info
+        </span>
       </div>
+      </>
+      )}
     </div>
   )
+
 }

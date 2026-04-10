@@ -100,7 +100,7 @@ export const SURFACES = [
     label: 'Google TV streamer',
     modality: 'VISUAL',
     urgency: 'LOW',
-    description: 'Living room media interface optimized for remote control navigation.',
+    description: 'Living room media interface optimized for remote control navigation. Highly relevant if the user is currently watching',
     contentConstraints: { type: 'SHORT', maxLength: 50 }
   },
   { 

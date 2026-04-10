@@ -109,7 +109,7 @@ export const AndroidAutoPreview = ({ action }) => {
                 style={{ 
                   flex: 1,
                   minHeight: 0,
-                  backgroundColor: 'var(--lofi-color1)', 
+                  backgroundColor: 'var(--lofi-color2)', 
                   borderRadius: '24px', 
                   padding: '24px', 
                   display: 'flex', 

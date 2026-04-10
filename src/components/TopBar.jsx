@@ -7,6 +7,12 @@ export default function TopBar({ onClearApiKey }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const menuRef = useRef(null);
 
+  useEffect(() => {
+    if (localStorage.getItem('use_experimental_logic') === null) {
+      localStorage.setItem('use_experimental_logic', 'false');
+    }
+  }, []);
+
   const handleMouseMove = (e) => {
     setMousePos({ x: e.clientX, y: e.clientY });
   };
@@ -101,7 +107,6 @@ export default function TopBar({ onClearApiKey }) {
                 className="btn btn-text"
                 onClick={() => {
                   document.documentElement.classList.toggle('dark');
-                  setShowMenu(false);
                 }}
                 style={{ 
                   justifyContent: 'space-between', 
@@ -115,7 +120,21 @@ export default function TopBar({ onClearApiKey }) {
                 <span>Change theme</span>
                 <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>tonality</span>
               </button>
-              <hr style={{ border: 'none', borderTop: '1px solid var(--sys-color-outline-variant)', margin: '4px 0' }} />
+
+              <div style={{ padding: '12px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '13px', color: 'var(--sys-color-on-surface)', fontWeight: 400 }}>Logic (experimental)</span>
+                <input 
+                  type="checkbox" 
+                  style={{ cursor: 'pointer', width: '16px', height: '16px' }}
+                  checked={localStorage.getItem('use_experimental_logic') === 'true'}
+                  onChange={(e) => {
+                    localStorage.setItem('use_experimental_logic', e.target.checked);
+                    setShowMenu(false);
+                    setTimeout(() => setShowMenu(true), 10);
+                  }}
+                />
+              </div>
+
               <button 
                 className="btn btn-text"
                 onClick={() => setShowConfirmModal(true)}
@@ -130,6 +149,33 @@ export default function TopBar({ onClearApiKey }) {
               >
                 <span>Clear API key</span>
               </button>
+
+              <div style={{ padding: '12px 20px', display: 'flex', flexDirection: 'column' }}>
+                <select 
+                  style={{ 
+                    width: '100%', 
+                    padding: '6px', 
+                    borderRadius: '6px', 
+                    border: '1px solid var(--sys-color-outline-variant)',
+                    backgroundColor: 'var(--sys-color-surface-container)',
+                    color: 'var(--sys-color-on-surface)',
+                    fontSize: '12px',
+                    outline: 'none',
+                    cursor: 'pointer'
+                  }}
+                  value={localStorage.getItem('gemini_model') || 'gemini-2.5-flash'}
+                  onChange={(e) => {
+                    localStorage.setItem('gemini_model', e.target.value);
+                    setShowMenu(false);
+                    setTimeout(() => setShowMenu(true), 10);
+                  }}
+                >
+                  <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                  <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                  <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+                  <option value="gemini-2.0-pro-exp">gemini-2.0-pro-exp</option>
+                </select>
+              </div>
             </div>
           )}
         </div>

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 export default function ApiKeyModal({ onSave, onClose }) {
-  const [key, setKey] = useState('');
+  const [key, setKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+  const [selectedModel, setSelectedModel] = useState(() => localStorage.getItem('gemini_model') || 'gemini-2.5-flash');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (key.trim()) {
-      onSave(key.trim());
+      onSave(key.trim(), selectedModel);
     }
   };
 
@@ -30,32 +31,36 @@ export default function ApiKeyModal({ onSave, onClose }) {
         border: '1px solid var(--sys-color-outline-variant)'
       }}>
         <h2 style={{ marginTop: 0, marginBottom: '12px', color: 'var(--sys-color-on-surface)', fontSize: '20px' }}>
-          Enter Gemini API Key
+          Gemini API Configuration
         </h2>
         <p style={{ color: 'var(--sys-color-on-surface-variant)', fontSize: '14px', marginBottom: '20px', lineHeight: '1.5' }}>
-          To run live predictions, please provide your own Gemini API Key. 
-          Your key is stored locally in your browser and never shared.
+          Configure your preferred reasoning model and API key.
         </p>
 
         <form onSubmit={handleSubmit}>
-          <input
-            type="password"
-            placeholder="Paste your key here..."
-            value={key}
-            onChange={(e) => setKey(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '12px',
-              borderRadius: '8px',
-              border: '1px solid var(--sys-color-outline-variant)',
-              backgroundColor: 'var(--sys-color-surface)',
-              color: 'var(--sys-color-on-surface)',
-              marginBottom: '24px',
-              boxSizing: 'border-box',
-              fontSize: '14px',
-              outline: 'none'
-            }}
-          />
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '8px', color: 'var(--sys-color-on-surface-variant)' }}>
+              API KEY
+            </label>
+            <input
+              type="password"
+              placeholder="Paste your key here..."
+              value={key}
+              onChange={(e) => setKey(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '8px',
+                border: '1px solid var(--sys-color-outline-variant)',
+                backgroundColor: 'var(--sys-color-surface)',
+                color: 'var(--sys-color-on-surface)',
+                boxSizing: 'border-box',
+                fontSize: '14px',
+                outline: 'none'
+              }}
+            />
+          </div>
+
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <a 

@@ -26,25 +26,36 @@ export default function ActionColumn({ actions, selectedAction, onActionSelect, 
           >
             <div style={{ fontSize: '14px', fontWeight: 500 }}>{a.title}</div>
             <div style={{ fontSize: '10px', color: 'var(--sys-color-on-surface-variant)' }}>{a.why}</div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '8px' }}>
-              <div 
-                style={{ backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', color: 'var(--sys-color-on-surface)' }}
-                onMouseEnter={(e) => handleMouseEnter(a.id, 'urgency', e)}
-                onMouseLeave={handleMouseLeave}
-                onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>timer</span> {a.urgency}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 300, color: 'var(--sys-color-on-surface-variant)' }}>
+                <span className="material-symbols-outlined" style={{ fontSize: '14px', color: 'var(--sys-color-on-surface-variant)' }}>
+                  {a.type === 'Proactive Action' ? 'bolt' : 'tips_and_updates'}
+                </span>
+                {a.type === 'Proactive Action' ? 'Action' : 'Suggestion'}
               </div>
-              <div 
-                style={{ backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', color: 'var(--sys-color-on-surface)' }}
-                onMouseEnter={(e) => handleMouseEnter(a.id, 'value', e)}
-                onMouseLeave={handleMouseLeave}
-                onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>diamond_shine</span> {a.value}
+
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <div 
+                  style={{ backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 300, display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}
+                  onMouseEnter={(e) => handleMouseEnter(a.id, 'urgency', e)}
+                  onMouseLeave={handleMouseLeave}
+                  onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: '14px', color: 'var(--sys-color-on-surface-variant)' }}>timer</span> {a.urgency}
+                </div>
+                <div 
+                  style={{ backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 300, display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}
+                  onMouseEnter={(e) => handleMouseEnter(a.id, 'value', e)}
+                  onMouseLeave={handleMouseLeave}
+                  onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: '14px', color: 'var(--sys-color-on-surface-variant)' }}>diamond_shine</span> {a.value}
+                </div>
               </div>
             </div>
+
           </div>
+
         ))}
       </div>
 

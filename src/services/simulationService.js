@@ -1,4 +1,5 @@
 import { fetchDataFromGemini } from './geminiService'
+import { fetchDataFromExperimental } from './geminiServiceExperimental'
 
 export const initialSignals = [
   { id: 1, name: 'Location', value: 'Home', category: 'User signals', sources: ['Phone location', 'Maps stored location'], confidence: 1.0, whyItMatters: 'Helps determine if you are available or in transit.' },
@@ -19,55 +20,21 @@ export const initialSelectedAction = initialActions[0]
 
 export const generateDataFromPrompt = async (promptText) => {
   try {
-    const liveData = await fetchDataFromGemini(promptText);
+    const useExperimental = localStorage.getItem('use_experimental_logic') === 'true';
+    const liveData = useExperimental 
+      ? await fetchDataFromExperimental(promptText) 
+      : await fetchDataFromGemini(promptText);
+
     if (liveData) {
       return liveData;
+
     }
   } catch (error) {
-    console.error('Gemini API call failed, falling back to mock data:', error);
+    console.error('Gemini API call failed:', error);
+    throw error; // Propagate error to trigger UI snackbar
   }
 
-  // Fallback mock logic for testing without API key
-  const text = promptText.toLowerCase()
-  const isRain = text.includes('rain')
-  const isDriving = text.includes('drive') || text.includes('driving')
-  const isHome = text.includes('home')
-  const isNYC = text.includes('nyc') || text.includes('new york')
-
-  let newSignals = []
-  let newActions = []
-
-  if (isNYC) {
-    newSignals = [
-      { id: 1, name: 'Interest', value: 'Planning trip to NYC', category: 'User signals', sources: ['Search History'], confidence: 0.9, whyItMatters: 'Triggers travel itinerary planning.' },
-      { id: 2, name: 'Calendar', value: 'Free next weekend', category: 'User signals', sources: ['Google Calendar'], confidence: 0.95, whyItMatters: 'Confirms availability for the trip.' },
-      { id: 3, name: 'Budget', value: 'Moderate', category: 'Relevant preferences', sources: ['Past hotel bookings'], confidence: 0.7, whyItMatters: 'Filters hotel and activity options.' },
-    ]
-    newActions = [
-      { id: 1, title: 'Help plan trip to NYC', why: 'You have free time next weekend and were searching for hotels.', urgency: 0.45, urgencyReasoning: 'Planning ahead avoids last minute stress', value: 0.7, valueReasoning: 'Saves time researching hotels', surfaces: ['gmail', 'phone_notification'] },
-      { id: 2, title: 'Look up things to do in NYC', why: 'You are interested in NYC but haven\'t booked activities yet.', urgency: 0.3, urgencyReasoning: 'No rush, trip is a week away', value: 0.5, valueReasoning: 'Fun activities planning', surfaces: ['gmail', 'smart_display'] },
-    ]
-  } else if (isRain || isDriving) {
-    newSignals = [
-      { id: 1, name: 'Location', value: isDriving ? 'In Car' : 'Office', category: 'User signals', sources: ['Phone GPS'], confidence: 0.95, whyItMatters: 'Contextualizes commuting delays.' },
-      { id: 2, name: 'Weather', value: isRain ? 'Raining' : 'Clear', category: 'Environmental context', sources: ['Weather API'], confidence: 1.0, whyItMatters: 'Triggers weather-specific route adjustments.' },
-      { id: 3, name: 'Activity', value: isDriving ? 'Driving' : 'Stationary', category: 'User signals', sources: ['Accelerometer', 'Maps'], confidence: 0.88, whyItMatters: 'Helps determine safety and delivery times.' },
-    ]
-    newActions = [
-      { id: 1, title: 'Suggest Alternate Route', why: 'Raining and traffic suggests a better route might exist.', urgency: 0.8, urgencyReasoning: 'Rerouting saves time in active commute', value: 0.9, valueReasoning: 'Direct time savings', surfaces: ['android_auto', 'phone_notification'] },
-      { id: 2, title: 'Order Dinner Early', why: 'You will be home late due to traffic and rain.', urgency: 0.4, urgencyReasoning: 'Order before delivery rush', value: 0.7, valueReasoning: 'Ensures food arrives when you get home', surfaces: ['gmail', 'smart_display'] },
-    ]
-  } else {
-    newSignals = [
-      { id: 1, name: 'Location', value: isHome ? 'At Home' : 'Office', category: 'User signals', sources: ['Phone GPS'], confidence: 0.9, whyItMatters: 'Determines the baseline context.' },
-      { id: 2, name: 'Calendar', value: 'No upcoming meetings', category: 'User signals', sources: ['Google Calendar'], confidence: 0.95, whyItMatters: 'Indicates a clear window for relaxation.' },
-    ]
-    newActions = [
-      { id: 1, title: 'Relaxing evening', why: 'No urgent tasks detected.', urgency: 0.2, urgencyReasoning: 'No pressing events', value: 0.5, valueReasoning: 'Personal wellness', surfaces: ['smart_display'] },
-    ]
-  }
-
-  return { signals: newSignals, actions: newActions }
 }
+
 
 
