@@ -37,7 +37,7 @@ export const SmartDisplayPreview = ({ action }) => {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ffffff' }}>
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'var(--lofi-surface)' }}>
       <div 
         style={{ 
           position: 'absolute', 
@@ -57,7 +57,7 @@ export const SmartDisplayPreview = ({ action }) => {
             transform: 'translateX(-50%)', 
             width: '800px', 
             height: '120px', 
-            backgroundColor: '#e9eef6', 
+            backgroundColor: 'var(--lofi-container4)', 
             borderTopLeftRadius: '50% 100%', 
             borderTopRightRadius: '50% 100%',
             zIndex: 1
@@ -72,8 +72,8 @@ export const SmartDisplayPreview = ({ action }) => {
             left: '0', 
             width: '1164px', 
             height: '750px', 
-            backgroundColor: '#ffffff', 
-            border: '8px solid #dde3ea', 
+            backgroundColor: 'var(--lofi-container1)', 
+            border: '8px solid var(--lofi-container5)', 
             borderRadius: '64px',
             boxSizing: 'border-box',
             boxShadow: '0 24px 48px rgba(0,0,0,0.05)',
@@ -81,9 +81,9 @@ export const SmartDisplayPreview = ({ action }) => {
           }}
         >
           {/* Hardware Sensors / Cutouts at top bezel */}
-          <div style={{ position: 'absolute', top: '24px', left: '50%', transform: 'translateX(-50%)', width: '32px', height: '20px', backgroundColor: '#f0f4f9', borderRadius: '10px' }} />
-          <div style={{ position: 'absolute', top: '28px', left: '340px', width: '16px', height: '10px', backgroundColor: '#f0f4f9', borderRadius: '5px' }} />
-          <div style={{ position: 'absolute', top: '28px', right: '340px', width: '16px', height: '10px', backgroundColor: '#f0f4f9', borderRadius: '5px' }} />
+          <div style={{ position: 'absolute', top: '24px', left: '50%', transform: 'translateX(-50%)', width: '32px', height: '20px', backgroundColor: 'var(--lofi-container3)', borderRadius: '10px' }} />
+          <div style={{ position: 'absolute', top: '28px', left: '340px', width: '16px', height: '10px', backgroundColor: 'var(--lofi-container3)', borderRadius: '5px' }} />
+          <div style={{ position: 'absolute', top: '28px', right: '340px', width: '16px', height: '10px', backgroundColor: 'var(--lofi-container3)', borderRadius: '5px' }} />
 
           {/* Inner Display Screen */}
           <div 
@@ -93,9 +93,9 @@ export const SmartDisplayPreview = ({ action }) => {
               left: '64px', 
               right: '64px', 
               bottom: '64px', 
-              backgroundColor: '#f8f9fa', 
+              backgroundColor: 'var(--lofi-container2)', 
               borderRadius: '24px',
-              border: '2px solid #c4c7c5',
+              border: '2px solid var(--lofi-text3)',
               overflow: 'hidden',
               padding: '32px 42px',
               boxSizing: 'border-box'
@@ -103,16 +103,16 @@ export const SmartDisplayPreview = ({ action }) => {
           >
             {/* Top Navigation Bar */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-              <div style={{ display: 'flex', gap: '40px', fontFamily: 'Redacted, sans-serif', fontSize: '24px', color: '#cbd1d7' }}>
-                <span style={{ color: '#cbd1d7', position: 'relative' }}>
+              <div style={{ display: 'flex', gap: '40px', fontFamily: 'Redacted, sans-serif', fontSize: '24px', color: 'var(--lofi-text3)' }}>
+                <span style={{ color: 'var(--lofi-text3)', position: 'relative' }}>
                   Home control
-                  <div style={{ position: 'absolute', bottom: '-12px', left: 0, width: '100%', height: '4px', backgroundColor: '#76acff', borderRadius: '2px' }} />
+                  <div style={{ position: 'absolute', bottom: '-12px', left: 0, width: '100%', height: '4px', backgroundColor: 'var(--lofi-container5)', borderRadius: '2px' }} />
                 </span>
                 <span>Media</span>
                 <span>Communicate</span>
                 <span>Discover</span>
               </div>
-              <div style={{ fontSize: '24px', color: '#dde3ea', fontWeight: 500 }}>
+              <div style={{ fontSize: '24px', color: 'var(--lofi-text2)', fontWeight: 500 }}>
                 {currentTime}
               </div>
             </div>
@@ -121,15 +121,15 @@ export const SmartDisplayPreview = ({ action }) => {
             <div style={{ display: 'flex', gap: '24px', height: '460px' }}>
               
               {/* Big Left Tile (4x) */}
-              <div style={{ flex: '0 0 456px', backgroundColor: '#ffffff', borderRadius: '16px', padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxSizing: 'border-box' }}>
-                <div style={{ width: '36px', height: '36px', backgroundColor: '#dde3ea', borderRadius: '50%', alignSelf: 'flex-start' }} />
+              <div style={{ flex: '0 0 456px', backgroundColor: 'var(--lofi-container1)', borderRadius: '16px', padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxSizing: 'border-box' }}>
+                <div style={{ width: '36px', height: '36px', backgroundColor: 'var(--lofi-container5)', borderRadius: '50%', alignSelf: 'flex-start' }} />
                 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '36px', color: '#dde3ea' }}>Song name</div>
-                  <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: '#dde3ea' }}>Album name</div>
+                  <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '36px', color: 'var(--lofi-text2)' }}>Song name</div>
+                  <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: 'var(--lofi-text2)' }}>Album name</div>
                 </div>
 
-                <div style={{ width: '200px', height: '200px', backgroundColor: '#e9eef6', borderRadius: '50%' }} />
+                <div style={{ width: '200px', height: '200px', backgroundColor: 'var(--lofi-container4)', borderRadius: '50%' }} />
               </div>
 
               {/* Right Column (Stack of Tiles) */}
@@ -140,7 +140,7 @@ export const SmartDisplayPreview = ({ action }) => {
                   <div 
                     style={{ 
                       height: '216px', 
-                      backgroundColor: '#f7ecfe', 
+                      backgroundColor: 'var(--lofi-color1)', 
                       borderRadius: '16px', 
                       padding: '24px', 
                       display: 'flex', 
@@ -151,38 +151,38 @@ export const SmartDisplayPreview = ({ action }) => {
                       ...animateStyle
                     }}
                   >
-                    <div style={{ backgroundColor: '#d9bafd', padding: '6px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', flexShrink: 0 }}>
-                      <GeminiSparkIcon size={20} color="#5629a4" />
+                    <div style={{ backgroundColor: 'var(--lofi-color2)', padding: '6px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', flexShrink: 0 }}>
+                      <GeminiSparkIcon size={20} color="var(--lofi-color8)" />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      <div style={{ fontSize: '24px', color: '#5629a4', fontWeight: 600, fontFamily: 'Google Sans, sans-serif' }}>{action.title}</div>
-                      <div style={{ fontSize: '16px', color: '#7438d2', lineHeight: '1.4', fontFamily: 'Google Sans, sans-serif' }}>{action.why}</div>
+                      <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontWeight: 600, fontFamily: 'Google Sans, sans-serif' }}>{action.title}</div>
+                      <div style={{ fontSize: '16px', color: 'var(--lofi-color8)', lineHeight: '1.4', fontFamily: 'Google Sans, sans-serif' }}>{action.why}</div>
                     </div>
                   </div>
                 ) : (
-                  <div style={{ height: '216px', backgroundColor: '#ffffff', borderRadius: '16px', padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxSizing: 'border-box' }}>
+                  <div style={{ height: '216px', backgroundColor: 'var(--lofi-container1)', borderRadius: '16px', padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxSizing: 'border-box' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      <div style={{ width: '36px', height: '36px', backgroundColor: '#dde3ea', borderRadius: '50%' }} />
-                      <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '36px', color: '#dde3ea' }}>Lights on</div>
-                      <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: '#dde3ea' }}>Living room</div>
+                      <div style={{ width: '36px', height: '36px', backgroundColor: 'var(--lofi-container5)', borderRadius: '50%' }} />
+                      <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '36px', color: 'var(--lofi-text2)' }}>Lights on</div>
+                      <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: 'var(--lofi-text2)' }}>Living room</div>
                     </div>
-                    <div style={{ width: '140px', height: '140px', backgroundColor: '#e9eef6', borderRadius: '50%' }} />
+                    <div style={{ width: '140px', height: '140px', backgroundColor: 'var(--lofi-container4)', borderRadius: '50%' }} />
                   </div>
                 )}
 
                 {/* Bottom Right Row (Two 1x Tiles) */}
                 <div style={{ display: 'flex', gap: '24px', height: '220px' }}>
                   
-                  <div style={{ flex: 1, backgroundColor: '#ffffff', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
-                    <div style={{ width: '36px', height: '36px', backgroundColor: '#dde3ea', borderRadius: '50%' }} />
-                    <div style={{ fontSize: '40px', color: '#dde3ea', fontWeight: 300 }}>68°</div>
-                    <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: '#dde3ea' }}>Thermostat</div>
+                  <div style={{ flex: 1, backgroundColor: 'var(--lofi-container1)', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+                    <div style={{ width: '36px', height: '36px', backgroundColor: 'var(--lofi-container5)', borderRadius: '50%' }} />
+                    <div style={{ fontSize: '40px', color: 'var(--lofi-text2)', fontWeight: 300 }}>68°</div>
+                    <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: 'var(--lofi-text2)' }}>Thermostat</div>
                   </div>
 
-                  <div style={{ flex: 1, backgroundColor: '#ffffff', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
-                    <div style={{ width: '36px', height: '36px', backgroundColor: '#dde3ea', borderRadius: '50%' }} />
-                    <div style={{ fontSize: '40px', color: '#dde3ea', fontWeight: 300 }}>{currentTime}</div>
-                    <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: '#dde3ea' }}>Timer</div>
+                  <div style={{ flex: 1, backgroundColor: 'var(--lofi-container1)', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+                    <div style={{ width: '36px', height: '36px', backgroundColor: 'var(--lofi-container5)', borderRadius: '50%' }} />
+                    <div style={{ fontSize: '40px', color: 'var(--lofi-text2)', fontWeight: 300 }}>{currentTime}</div>
+                    <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '16px', color: 'var(--lofi-text2)' }}>Timer</div>
                   </div>
 
                 </div>

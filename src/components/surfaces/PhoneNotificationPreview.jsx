@@ -37,7 +37,7 @@ export const PhoneNotificationPreview = ({ action }) => {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ffffff' }}>
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'var(--lofi-surface)' }}>
       <div 
         style={{ 
           position: 'absolute', 
@@ -48,15 +48,15 @@ export const PhoneNotificationPreview = ({ action }) => {
           transition: 'transform 0.1s ease-out'
         }}
       >
-        <div style={{ position: 'absolute', backgroundColor: '#dde3ea', height: '84px', right: '8px', top: '233px', width: '4px', borderTopRightRadius: '20px', borderBottomRightRadius: '20px' }} />
-        <div style={{ position: 'absolute', backgroundColor: '#dde3ea', height: '84px', right: '8px', top: '343px', width: '4px', borderTopRightRadius: '20px' }} />
-        <div style={{ position: 'absolute', backgroundColor: '#dde3ea', height: '84px', right: '8px', top: '429px', width: '4px', borderBottomRightRadius: '20px' }} />
+        <div style={{ position: 'absolute', backgroundColor: 'var(--lofi-container5)', height: '84px', right: '8px', top: '233px', width: '4px', borderTopRightRadius: '20px', borderBottomRightRadius: '20px' }} />
+        <div style={{ position: 'absolute', backgroundColor: 'var(--lofi-container5)', height: '84px', right: '8px', top: '343px', width: '4px', borderTopRightRadius: '20px' }} />
+        <div style={{ position: 'absolute', backgroundColor: 'var(--lofi-container5)', height: '84px', right: '8px', top: '429px', width: '4px', borderBottomRightRadius: '20px' }} />
 
         <div 
           style={{ 
             position: 'absolute', 
-            backgroundColor: '#f8fafd', 
-            border: '6px solid #dde3ea', 
+            backgroundColor: 'var(--lofi-container2)', 
+            border: '6px solid var(--lofi-container5)', 
             height: '892px', 
             left: '20px', 
             top: '6px', 
@@ -67,17 +67,17 @@ export const PhoneNotificationPreview = ({ action }) => {
           }}
         >
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '96px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px 36px 40px', boxSizing: 'border-box' }}>
-            <div style={{ width: '60px', height: '60px', backgroundColor: '#dde3ea', borderRadius: '50%' }} />
-            <div style={{ width: '108px', height: '4px', backgroundColor: '#dde3ea', borderRadius: '12px', alignSelf: 'flex-end', marginBottom: '12px' }} />
-            <div style={{ width: '60px', height: '60px', backgroundColor: '#dde3ea', borderRadius: '50%' }} />
+            <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--lofi-container5)', borderRadius: '50%' }} />
+            <div style={{ width: '108px', height: '4px', backgroundColor: 'var(--lofi-container5)', borderRadius: '12px', alignSelf: 'flex-end', marginBottom: '12px' }} />
+            <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--lofi-container5)', borderRadius: '50%' }} />
           </div>
 
           <div style={{ position: 'absolute', top: '20px', left: '50%', transform: 'translateX(-50%)', width: '356px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ fontSize: '14px', color: '#dde3ea', fontWeight: 500 }}>{currentTime}</div>
+            <div style={{ fontSize: '14px', color: 'var(--lofi-container5)', fontWeight: 500 }}>{currentTime}</div>
             {/* Camera Hole - Absolutely centered */}
-            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: '26px', height: '26px', backgroundColor: '#dde3ea', borderRadius: '50%' }} />
+            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: '26px', height: '26px', backgroundColor: 'var(--lofi-container5)', borderRadius: '50%' }} />
             {/* Status Icons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#dde3ea' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--lofi-container5)' }}>
               <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>signal_cellular_4_bar</span>
               <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>wifi</span>
               <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>battery_full</span>
@@ -86,10 +86,10 @@ export const PhoneNotificationPreview = ({ action }) => {
 
           {/* Lock Screen Content */}
           <div style={{ position: 'absolute', top: '120px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '346px' }}>
-            <div style={{ fontSize: '120px', fontWeight: 200, color: '#e9eef6', lineHeight: '120px', letterSpacing: '-2px', fontFamily: 'sans-serif' }}>
+            <div style={{ fontSize: '120px', fontWeight: 200, color: 'var(--lofi-text1)', lineHeight: '120px', letterSpacing: '-2px', fontFamily: 'sans-serif' }}>
               {currentTime}
             </div>
-            <div style={{ fontSize: '20px', color: '#dde3ea', marginTop: '12px', fontWeight: 400, fontFamily: 'Redacted, sans-serif' }}>
+            <div style={{ fontSize: '20px', color: 'var(--lofi-container5)', marginTop: '12px', fontWeight: 400, fontFamily: 'Redacted, sans-serif' }}>
               Tuesday, October 24
             </div>
           </div>

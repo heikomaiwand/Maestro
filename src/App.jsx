@@ -47,6 +47,11 @@ function App() {
     setShowApiKeyModal(false);
   };
 
+  const handleClearApiKey = () => {
+    localStorage.removeItem('gemini_api_key');
+    setShowApiKeyModal(true);
+  };
+
   return (
     <div className="app-container">
       {showApiKeyModal && (
@@ -55,7 +60,7 @@ function App() {
           onClose={() => setShowApiKeyModal(false)} 
         />
       )}
-      <TopBar />
+      <TopBar onClearApiKey={handleClearApiKey} />
 
       {isZeroState && (
         <ZeroState 

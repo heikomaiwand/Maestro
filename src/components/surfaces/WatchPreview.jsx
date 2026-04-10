@@ -37,7 +37,7 @@ export const WatchPreview = ({ action }) => {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ffffff' }}>
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'var(--lofi-surface)' }}>
       <div 
         style={{ 
           position: 'absolute', 
@@ -58,7 +58,7 @@ export const WatchPreview = ({ action }) => {
             zIndex: 1
           }} 
         >
-          <WatchStrapIcon width={247} height={106} color="#f0f4f9" />
+          <WatchStrapIcon width={247} height={106} color="var(--lofi-container3)" />
         </div>
 
         {/* Authentic Curved Bottom Watch Strap (Tucked and Rotated 180deg) */}
@@ -71,7 +71,7 @@ export const WatchPreview = ({ action }) => {
             zIndex: 1
           }} 
         >
-          <WatchStrapIcon width={247} height={106} color="#f0f4f9" />
+          <WatchStrapIcon width={247} height={106} color="var(--lofi-container3)" />
         </div>
 
         {/* Right Hardware Crown */}
@@ -82,7 +82,7 @@ export const WatchPreview = ({ action }) => {
             right: '24px', 
             width: '24px', 
             height: '60px', 
-            backgroundColor: '#e9eef6', 
+            backgroundColor: 'var(--lofi-container4)', 
             borderRadius: '0 12px 12px 0',
             boxShadow: 'inset -2px 0 4px rgba(0,0,0,0.05)',
             zIndex: 2
@@ -97,9 +97,9 @@ export const WatchPreview = ({ action }) => {
             left: '45px', 
             width: '370px', 
             height: '370px', 
-            backgroundColor: '#dde3ea', 
+            backgroundColor: 'var(--lofi-container5)', 
             borderRadius: '50%',
-            border: '4px solid #f8f9fa',
+            border: '4px solid var(--lofi-container1)', 
             boxShadow: '0 16px 32px rgba(0,0,0,0.08), inset 0 4px 12px rgba(0,0,0,0.05)',
             overflow: 'hidden',
             display: 'flex',

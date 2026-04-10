@@ -28,7 +28,7 @@ export default function ActionColumn({ actions, selectedAction, onActionSelect, 
             <div style={{ fontSize: '10px', color: 'var(--sys-color-on-surface-variant)' }}>{a.why}</div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '8px' }}>
               <div 
-                style={{ background: '#f0f4f9', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+                style={{ backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', color: 'var(--sys-color-on-surface)' }}
                 onMouseEnter={(e) => handleMouseEnter(a.id, 'urgency', e)}
                 onMouseLeave={handleMouseLeave}
                 onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
@@ -36,7 +36,7 @@ export default function ActionColumn({ actions, selectedAction, onActionSelect, 
                 <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>timer</span> {a.urgency}
               </div>
               <div 
-                style={{ background: '#f0f4f9', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+                style={{ backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', color: 'var(--sys-color-on-surface)' }}
                 onMouseEnter={(e) => handleMouseEnter(a.id, 'value', e)}
                 onMouseLeave={handleMouseLeave}
                 onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}

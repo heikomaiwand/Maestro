@@ -1,13 +1,111 @@
 :root {
   --sys-color-surface: #ffffff;
+  --sys-color-surface-container: #f3f6fc;
   --sys-color-surface-container-high: #e9eef6;
   --sys-color-primary: #0b57d0;
+  --sys-color-on-primary: #ffffff;
   --sys-color-primary-container: #d3e3fd;
+  --sys-color-on-secondary-container: #001d35;
   --sys-color-on-surface: #1f1f1f;
   --sys-color-on-surface-variant: #444746;
   --sys-color-outline-variant: #c4c7c5;
   
   --font-sans: 'Google Sans Flex', 'Google Sans Text', 'Google Sans', 'Inter', system-ui, sans-serif;
+  
+  /* Figma Lo-Fi Core Primitive Variables (Synchronized perfectly to UX design sheet) */
+  --lofi-color1: #FDF8FF;
+  --lofi-color2: #F7ECFE;
+  --lofi-color3: #EEDCFE;
+  --lofi-color4: #D9BAFD;
+  --lofi-color5: #C597FF;
+  --lofi-color6: #AD72FF;
+  --lofi-color7: #9254EA;
+  --lofi-color8: #7438D2;
+  --lofi-color9: #5629A4;
+  --lofi-color10: #400B84;
+  --lofi-color11: #280255;
+
+  --lofi-tint-color1: rgba(146, 84, 234, 0.08);
+  --lofi-tint-color2: rgba(146, 84, 234, 0.10);
+  --lofi-tint-color3: rgba(146, 84, 234, 0.16);
+
+  --lofi-surface: #FFFFFF;
+  --lofi-container1: #FFFFFF;
+  --lofi-container2: #F8FAFD;
+  --lofi-container3: #F0F4F9;
+  --lofi-container4: #E9EEF6;
+  --lofi-container5: #DDE3EA;
+  --lofi-text1: #E9EEF6;
+  --lofi-text2: #DDE3EA;
+  --lofi-text3: #CBD1D7;
+
+  --lofi-tint1: rgba(105, 145, 214, 0.08);
+  --lofi-tint2: rgba(105, 145, 214, 0.10);
+  --lofi-tint3: rgba(105, 145, 214, 0.16);
+  --lofi-tint4: rgba(105, 145, 214, 0.32);
+
+  --lofi-primary: #DFF3FF;
+  --lofi-highlight: #76ACFF;
+  --lofi-green: #BEEFBB;
+  --lofi-red: #FFDADC;
+  --lofi-yellow: #FFE07C;
+  --lofi-outline: #C4C7C5;
+  --lofi-outline-low: #E1E3E1;
+  --lofi-black: rgba(0, 0, 0, 0.08);
+}
+
+:root.dark {
+  --sys-color-surface: #131314;
+  --sys-color-surface-container: #1e1f20;
+  --sys-color-surface-container-high: #282a2c;
+  --sys-color-primary: #a8c7fa;
+  --sys-color-on-primary: #003355;
+  --sys-color-primary-container: #004a77;
+  --sys-color-on-secondary-container: #c2e7ff;
+  --sys-color-on-surface: #e3e3e3;
+  --sys-color-on-surface-variant: #c4c7c5;
+  --sys-color-outline-variant: #444746;
+
+  /* Figma Lo-Fi Core Primitive Variables (Synchronized perfectly to UX design sheet - Dark Mode) */
+  --lofi-color1: #280255;
+  --lofi-color2: #400B84;
+  --lofi-color3: #5629A4;
+  --lofi-color4: #7438D2;
+  --lofi-color5: #9254EA;
+  --lofi-color6: #AD72FF;
+  --lofi-color7: #C597FF;
+  --lofi-color8: #D9BAFD;
+  --lofi-color9: #EEDCFE;
+  --lofi-color10: #F7ECFE;
+  --lofi-color11: #FDF8FF;
+
+  --lofi-tint-color1: rgba(197, 151, 255, 0.08);
+  --lofi-tint-color2: rgba(197, 151, 255, 0.12);
+  --lofi-tint-color3: rgba(197, 151, 255, 0.16);
+
+  --lofi-surface: #131314;
+  --lofi-container1: #0E0E0E;
+  --lofi-container2: #1B1818;
+  --lofi-container3: #1E1F20;
+  --lofi-container4: #282A2C;
+  --lofi-container5: #333537;
+  --lofi-text1: #282A2C;
+  --lofi-text2: #333537;
+  --lofi-text3: #434547;
+
+  --lofi-tint1: rgba(209, 225, 255, 0.08);
+  --lofi-tint2: rgba(209, 225, 255, 0.12);
+  --lofi-tint3: rgba(209, 225, 255, 0.16);
+  --lofi-tint4: rgba(209, 225, 255, 0.32);
+
+  --lofi-primary: #001D35;
+  --lofi-highlight: #04409F;
+  --lofi-green: #002110;
+  --lofi-red: #3A0907;
+  --lofi-yellow: #2F1400;
+  --lofi-outline: #444746;
+  --lofi-outline-low: #2C2D2D;
+  --lofi-black: rgba(0, 0, 0, 0.08);
 }
 
 body {
@@ -161,7 +259,7 @@ body {
 /* Color Profiles */
 .btn-primary {
   background-color: var(--sys-color-primary);
-  color: white;
+  color: var(--sys-color-on-primary);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -171,7 +269,7 @@ body {
 
 .btn-tonal {
   background-color: var(--sys-color-primary-container);
-  color: #0b57d0;
+  color: var(--sys-color-on-secondary-container);
 }
 
 .btn-tonal:hover:not(:disabled) {

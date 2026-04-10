@@ -81,7 +81,7 @@ export const PixelBudsPreview = ({ action }) => {
                 height: 0,
                 borderLeft: '16px solid transparent',
                 borderRight: '16px solid transparent',
-                borderBottom: '18px solid #ebd5fc',
+                borderBottom: '18px solid var(--lofi-color2)',
                 zIndex: 1
               }}
             />
@@ -96,7 +96,7 @@ export const PixelBudsPreview = ({ action }) => {
                 height: 0,
                 borderLeft: '14px solid transparent',
                 borderRight: '14px solid transparent',
-                borderBottom: '16px solid #fbf7ff',
+                borderBottom: '16px solid var(--lofi-color1)',
                 zIndex: 2
               }}
             />
@@ -104,8 +104,8 @@ export const PixelBudsPreview = ({ action }) => {
             {/* The Speech Bubble Box */}
             <div 
               style={{
-                backgroundColor: '#fbf7ff',
-                border: '2px solid #ebd5fc',
+                backgroundColor: 'var(--lofi-color1)',
+                border: '2px solid var(--lofi-color2)',
                 borderRadius: '16px',
                 padding: '24px 32px',
                 boxShadow: '0 8px 24px rgba(86, 41, 164, 0.04)',
@@ -115,7 +115,7 @@ export const PixelBudsPreview = ({ action }) => {
                 zIndex: 3
               }}
             >
-              <div style={{ fontSize: '24px', color: '#6432c8', fontFamily: 'Google Sans, sans-serif', fontWeight: 400 }}>
+              <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontFamily: 'Google Sans, sans-serif', fontWeight: 400 }}>
                 "{action.why}"
               </div>
             </div>
