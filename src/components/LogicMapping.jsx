@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function LogicMapping({ selectedAction, orchestrationCache = {}, onToggle }) {
+export default function LogicMapping({ selectedAction, orchestrationCache = {}, onToggle, isFullScreen, onFullScreenToggle }) {
   const oData = selectedAction ? orchestrationCache[selectedAction.id] : null;
 
   return (
-    <div className="column3">
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
       <div>
         <div className="title-medium" style={{ textAlign: 'center', marginBottom: '24px' }}>Logic mapping</div>
         
@@ -45,7 +45,14 @@ export default function LogicMapping({ selectedAction, orchestrationCache = {}, 
 
       {/* Bottom Action Footer */}
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 24px', marginTop: 'auto' }}>
-        <span className="material-symbols-outlined" style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}>zoom_out_map</span>
+        <span 
+          className="material-symbols-outlined" 
+          onClick={onFullScreenToggle}
+          style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}
+          title={isFullScreen ? "Restore Width" : "Full Width"}
+        >
+          {isFullScreen ? 'zoom_in_map' : 'zoom_out_map'}
+        </span>
         <span 
           className="material-symbols-outlined" 
           style={{ cursor: 'pointer', color: 'var(--sys-color-primary)' }} 

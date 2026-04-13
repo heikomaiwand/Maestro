@@ -79,7 +79,25 @@ export default function SignalColumn({ signals }) {
           </div>
         ))}
 
-        <button className="btn btn-outline" style={{ alignSelf: 'flex-start' }}>
+        <button 
+          disabled 
+          style={{ 
+            alignSelf: 'flex-start',
+            height: '40px',
+            padding: '0 24px',
+            borderRadius: '20px',
+            border: '1px solid var(--sys-color-on-surface)',
+            backgroundColor: 'transparent',
+            color: 'var(--sys-color-on-surface)',
+            fontSize: '14px',
+            fontWeight: 500,
+            opacity: 0.38,
+            cursor: 'not-allowed',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
           Add new signal
         </button>
       </div>

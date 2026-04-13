@@ -249,7 +249,7 @@ export const AndroidAutoPreview = ({ action }) => {
               <span className="material-symbols-filled" style={{ fontSize: '20px', color: 'var(--lofi-text3)' }}>signal_cellular_4_bar</span>
               <span className="material-symbols-filled" style={{ fontSize: '20px', color: 'var(--lofi-text3)' }}>battery_full</span>
             </div>
-            <div style={{ fontSize: '16px', fontWeight: 600, color: 'var(--lofi-text3)', fontFamily: 'Redacted, sans-serif' }}>
+            <div style={{ fontSize: '16px', fontWeight: 600, color: 'var(--lofi-text3)', fontFamily: 'Google Sans, sans-serif' }}>
               12:33
             </div>
           </div>

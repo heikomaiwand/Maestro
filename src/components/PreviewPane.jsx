@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { SURFACES } from '../config/surfaces';
 import { getSurfacePreviewComponent } from './SurfacePreviews';
 
-export default function PreviewPane({ selectedAction, activeSurface, onSurfaceChange, orchestrationCache = {}, onInfoClick }) {
+export default function PreviewPane({ selectedAction, activeSurface, onSurfaceChange, orchestrationCache = {}, onInfoClick, isFullScreen, onFullScreenToggle }) {
 
   const scrollRef = useRef(null);
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -82,7 +82,7 @@ export default function PreviewPane({ selectedAction, activeSurface, onSurfaceCh
 
   return (
 
-    <div className="column3">
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
       <div className="title-medium" style={{ textAlign: 'center' }}>Interface preview</div>
       
       {selectedAction && (
@@ -139,12 +139,19 @@ export default function PreviewPane({ selectedAction, activeSurface, onSurfaceCh
       </div>
 
 
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', minHeight: 0, overflow: 'hidden' }}>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', minHeight: 0, overflow: 'hidden', padding: '40px', boxSizing: 'border-box' }}>
         {getSurfacePreviewComponent(activeSurface, selectedAction && selectedAction.surfaces.includes(activeSurface) ? selectedAction : null)}
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 24px', marginTop: 'auto' }}>
-        <span className="material-symbols-outlined" style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}>zoom_out_map</span>
+        <span 
+          className="material-symbols-outlined" 
+          onClick={onFullScreenToggle}
+          style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}
+          title={isFullScreen ? "Restore Width" : "Full Width"}
+        >
+          {isFullScreen ? 'zoom_in_map' : 'zoom_out_map'}
+        </span>
         <span 
           className="material-symbols-outlined" 
           style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }} 

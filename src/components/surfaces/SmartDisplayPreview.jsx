@@ -13,8 +13,8 @@ export const SmartDisplayPreview = ({ action }) => {
       const parent = containerRef.current.parentElement;
       if (!parent) return;
       
-      const availableWidth = parent.clientWidth;
-      const availableHeight = parent.clientHeight;
+      const availableWidth = parent.clientWidth - 80;
+      const availableHeight = parent.clientHeight - 80;
       
       const targetWidth = 1164;
       const targetHeight = 800;

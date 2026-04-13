@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { SUGGESTED_PROMPTS } from '../config/suggestedPrompts'
 
 export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, initialPrompt = '' }) {
@@ -6,6 +6,13 @@ export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, in
   const [promptText, setPromptText] = useState(initialPrompt)
   const [currentIndex, setCurrentIndex] = useState(() => Math.floor(Math.random() * SUGGESTED_PROMPTS.length))
   const [isFading, setIsFading] = useState(false)
+  const textareaRef = useRef(null)
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus()
+    }
+  }, [])
 
   // Cycle through suggestions every 6 seconds with a smooth fade
   useEffect(() => {
@@ -52,6 +59,7 @@ export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, in
         )}
         <div className="zero-state-input-card" style={{ position: 'relative' }}>
           <textarea
+            ref={textareaRef}
             className="zero-state-textarea"
             placeholder="Describe a scenario to simulate"
             value={promptText}
@@ -73,6 +81,7 @@ export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, in
                 color: 'var(--sys-color-on-surface-variant)',
                 opacity: isFading ? 0 : 0.6,
                 fontStyle: 'italic',
+                fontWeight: 300,
                 lineHeight: 1.5,
                 transition: 'opacity 0.5s ease-in-out'
               }}

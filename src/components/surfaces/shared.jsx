@@ -118,3 +118,36 @@ export const useAnimateIn = (action) => {
 
   return style;
 };
+
+// Universally accessible hook to handle safe aspect-ratio scaling while strictly preserving 80px boundary margins
+export const useCanvasScale = (containerRef, targetWidth, targetHeight) => {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (!containerRef.current) return;
+      const parent = containerRef.current.parentElement;
+      if (!parent) return;
+      
+      const availableWidth = parent.clientWidth - 80;
+      const availableHeight = parent.clientHeight - 80;
+
+      const scaleX = availableWidth / targetWidth;
+      const scaleY = availableHeight / targetHeight;
+      
+      const newScale = Math.min(scaleX, scaleY, 1);
+      setScale(newScale);
+    };
+
+    const observer = new ResizeObserver(updateScale);
+    if (containerRef.current && containerRef.current.parentElement) {
+      observer.observe(containerRef.current.parentElement);
+    }
+    
+    updateScale();
+
+    return () => observer.disconnect();
+  }, [targetWidth, targetHeight]);
+
+  return scale;
+};

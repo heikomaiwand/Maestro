@@ -13,8 +13,8 @@ export const SmartSpeakerPreview = ({ action }) => {
       const parent = containerRef.current.parentElement;
       if (!parent) return;
       
-      const availableWidth = parent.clientWidth;
-      const availableHeight = parent.clientHeight;
+      const availableWidth = parent.clientWidth - 80;
+      const availableHeight = parent.clientHeight - 80;
       
       // Using the exact custom canvas dimension defined by your floating aesthetic
       const targetWidth = 900;

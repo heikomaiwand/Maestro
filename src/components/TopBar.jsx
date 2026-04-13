@@ -46,7 +46,21 @@ export default function TopBar({ onClearApiKey }) {
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={handleMouseMove}
       >
-        MAESTRO prototype
+        <span style={{ fontWeight: 500 }}>MAESTRO prototype</span>
+        <a 
+          href="http://go/maestro-proto" 
+          target="_blank" 
+          rel="noreferrer"
+          style={{ 
+            marginLeft: '8px', 
+            fontSize: '16px', 
+            color: 'var(--sys-color-outline)', 
+            textDecoration: 'none',
+            fontWeight: 300
+          }}
+        >
+          (go/maestro-proto)
+        </a>
         
         {isHovered && (
           <div 
