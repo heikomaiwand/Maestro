@@ -2,10 +2,15 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useAnimateIn } from './shared';
 import SmartSpeaker from '../../assets/SmartSpeaker.svg';
 
-export const SmartSpeakerPreview = ({ action }) => {
+export const SmartSpeakerPreview = ({ action, orchData }) => {
+
   const containerRef = useRef(null);
   const [scale, setScale] = useState(1);
   const animateStyle = useAnimateIn(action);
+
+  const howData = orchData && orchData.how ? orchData.how : null;
+  const specific = howData ? (howData.smart_speaker || howData) : null;
+  const displayTTS = specific ? (specific['text-to-speech'] || specific['Text-to-speech'] || specific.text_to_speech || specific.TextToSpeech || specific.message || action?.why || '') : (action?.why || '');
 
   useEffect(() => {
     const updateScale = () => {
@@ -116,8 +121,10 @@ export const SmartSpeakerPreview = ({ action }) => {
               }}
             >
               <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontFamily: 'Google Sans, sans-serif', fontWeight: 400 }}>
-                "{action.why}"
+                "{displayTTS}"
               </div>
+
+
             </div>
             
           </div>

@@ -1,11 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDynamicClock, useAnimateIn, GeminiSparkIcon } from './shared';
 
-export const SmartDisplayPreview = ({ action }) => {
+export const SmartDisplayPreview = ({ action, orchData }) => {
   const containerRef = useRef(null);
   const [scale, setScale] = useState(0.5);
   const currentTime = useDynamicClock(action);
   const animateStyle = useAnimateIn(action);
+
+  const howData = orchData && orchData.how ? orchData.how : null;
+  const specific = howData ? (howData.smart_display || howData) : null;
+  const displayTitle = specific ? (specific.Headline || specific.headline || specific.title || action?.title || 'Notification') : (action?.title || 'Notification');
+  const displayWhy = specific ? (specific.Subheading || specific.subheading || specific.message || action?.why || '') : (action?.why || '');
+
 
   useEffect(() => {
     const updateScale = () => {
@@ -155,8 +161,11 @@ export const SmartDisplayPreview = ({ action }) => {
                       <GeminiSparkIcon size={20} color="var(--lofi-color8)" />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontWeight: 600, fontFamily: 'Google Sans, sans-serif' }}>{action.title}</div>
-                      <div style={{ fontSize: '16px', color: 'var(--lofi-color8)', lineHeight: '1.4', fontFamily: 'Google Sans, sans-serif' }}>{action.why}</div>
+                      <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontWeight: 600, fontFamily: 'Google Sans, sans-serif' }}>{displayTitle}</div>
+                      <div style={{ fontSize: '16px', color: 'var(--lofi-color8)', lineHeight: '1.4', fontFamily: 'Google Sans, sans-serif' }}>{displayWhy}</div>
+                      <div style={{ marginTop: '12px', alignSelf: 'flex-start', color: 'var(--lofi-color8)', fontSize: '16px', fontWeight: 600, fontFamily: 'Google Sans, sans-serif' }}>
+                        {specific ? (specific.action1 || specific.Action1 || specific['Action 1'] || specific.Action || 'Action') : 'Action'}
+                      </div>
                     </div>
                   </div>
                 ) : (

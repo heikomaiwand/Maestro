@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-export default function TopBar({ onClearApiKey }) {
+export default function TopBar({ onClearApiKey, onDebugClick }) {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showMenu, setShowMenu] = useState(false);
@@ -80,11 +80,11 @@ export default function TopBar({ onClearApiKey }) {
       </div>
 
       <div style={{ display: 'flex', gap: '16px', alignItems: 'center', position: 'relative' }}>
-        {/* Muted Bug Icon */}
         <span 
           className="material-symbols-outlined" 
-          title="Debug mode (coming soon)"
-          style={{ color: 'var(--sys-color-outline-variant)', cursor: 'default' }}
+          title="Open Debug Panel"
+          style={{ cursor: 'pointer', color: 'var(--sys-color-on-surface)' }}
+          onClick={onDebugClick}
         >
           bug_report
         </span>
@@ -135,19 +135,6 @@ export default function TopBar({ onClearApiKey }) {
                 <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>tonality</span>
               </button>
 
-              <div style={{ padding: '12px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '13px', color: 'var(--sys-color-on-surface)', fontWeight: 400 }}>Logic (experimental)</span>
-                <input 
-                  type="checkbox" 
-                  style={{ cursor: 'pointer', width: '16px', height: '16px' }}
-                  checked={localStorage.getItem('use_experimental_logic') === 'true'}
-                  onChange={(e) => {
-                    localStorage.setItem('use_experimental_logic', e.target.checked);
-                    setShowMenu(false);
-                    setTimeout(() => setShowMenu(true), 10);
-                  }}
-                />
-              </div>
 
               <button 
                 className="btn btn-text"
@@ -177,13 +164,15 @@ export default function TopBar({ onClearApiKey }) {
                     outline: 'none',
                     cursor: 'pointer'
                   }}
-                  value={localStorage.getItem('gemini_model') || 'gemini-2.5-flash'}
+                  value={localStorage.getItem('gemini_model') || 'gemini-3.1-flash-preview'}
                   onChange={(e) => {
                     localStorage.setItem('gemini_model', e.target.value);
                     setShowMenu(false);
                     setTimeout(() => setShowMenu(true), 10);
                   }}
                 >
+                  <option value="gemini-3.1-flash-preview">gemini-3.1-flash-preview</option>
+                  <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
                   <option value="gemini-2.5-flash">gemini-2.5-flash</option>
                   <option value="gemini-2.5-pro">gemini-2.5-pro</option>
                   <option value="gemini-2.0-flash">gemini-2.0-flash</option>

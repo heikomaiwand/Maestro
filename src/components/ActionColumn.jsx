@@ -15,7 +15,7 @@ export default function ActionColumn({ actions, selectedAction, onActionSelect, 
 
   return (
     <div className="column2">
-      <div className="title-medium" style={{ textAlign: 'center' }}>Intelligent actions</div>
+      <div className="title-medium" style={{ textAlign: 'center' }}>Reasoning engine</div>
       
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {actions.map(a => (
@@ -45,11 +45,11 @@ export default function ActionColumn({ actions, selectedAction, onActionSelect, 
                 </div>
                 <div 
                   style={{ backgroundColor: 'var(--sys-color-surface-container)', padding: '4px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 300, display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', color: 'var(--sys-color-on-surface-variant)' }}
-                  onMouseEnter={(e) => handleMouseEnter(a.id, 'value', e)}
+                  onMouseEnter={(e) => handleMouseEnter(a.id, 'estimatedUserValue', e)}
                   onMouseLeave={handleMouseLeave}
                   onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
                 >
-                  <span className="material-symbols-outlined" style={{ fontSize: '14px', color: 'var(--sys-color-on-surface-variant)' }}>diamond_shine</span> {a.value}
+                  <span className="material-symbols-outlined" style={{ fontSize: '14px', color: 'var(--sys-color-on-surface-variant)' }}>diamond_shine</span> {a.estimatedUserValue ?? a.value}
                 </div>
               </div>
             </div>
@@ -80,14 +80,15 @@ export default function ActionColumn({ actions, selectedAction, onActionSelect, 
                   <div>{action.urgencyReasoning}</div>
                 </div>
               );
-            } else {
+            } else if (hoveredChip.type === 'estimatedUserValue') {
               return (
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '4px' }}>Value: {action.value}</div>
-                  <div>{action.valueReasoning}</div>
+                  <div style={{ fontWeight: 600, marginBottom: '4px' }}>Estimated User Value: {action.estimatedUserValue ?? action.value}</div>
+                  <div>{action.estimatedUserValueReasoning ?? action.valueReasoning}</div>
                 </div>
               );
             }
+            return null;
           })()}
         </div>
       )}

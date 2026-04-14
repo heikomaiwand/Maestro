@@ -12,7 +12,7 @@ When evaluating a scenario, the engine must generate an exhaustive list of poten
 *   **Explicit Input**: Direct user interactions (e.g., speaking to Gemini, typing an address in Android Auto, searching on Google).
     *   *CRITICAL NEGATIVE CONSTRAINT*: Do NOT classify events as "Explicit Input" unless the scenario specifically mentions the user commanding a device. Narrations of natural events (e.g., "Groceries arrived" or "I open the door") are NOT explicit inputs. Do NOT use "User utterance" as a source unless the prompt says "The user says/asks...".
 *   **User Signals**: State of the individual (e.g., biometrics, current activity, location, passive ambient audio, screen context).
-*   **Environmental Context**: State of the surroundings (e.g., room temperature, proximity to specific home devices, noise levels, physical object detection via Smart Home Vision/Cameras).
+*   **Environmental Context**: State of the surroundings (e.g., room temperature, proximity to specific home devices, how many people are at home, noise levels, physical object detection via Smart Home Vision/Cameras).
 *   **Relevant Preferences**: Long-term knowledge (e.g., routine timing, favorite playlists, dietary restrictions).
 
 ### Source Creativity
@@ -26,7 +26,7 @@ The engine should look beyond the obvious (GPS) and leverage deep integration:
 
 Once signals are gathered, the engine evaluates which recommendations provide the most utility. Crucially, it must decide between taking a direct action versus offering a suggestion.
 
-### Proactive Action
+### Action
 *   **Definition**: An automated state change executed directly on behalf of the user.
 *   **When to trigger**:
     *   High confidence in user intent.
@@ -47,12 +47,6 @@ Once signals are gathered, the engine evaluates which recommendations provide th
 Every recommendation is scored across two primary axes:
 
 1.  **Urgency (0.0 - 1.0)**: How time-sensitive is this intervention? (e.g., a boiling kettle is high urgency; a sleep reminder is low).
-2.  **Value (0.0 - 1.0)**: How much physical or cognitive load, time, and/or money does this save for the user?
-
----
-
-## 4. Critique & Steering Heuristics
-
-To continuously refine these models, developers can provide structured critiques:
-*   **Under-weighted Context**: Flagging when a critical signal was ignored.
-*   **False Urgency**: Down-voting actions that interrupt the user unnecessarily.
+2.  **Helpfulness (0.0 - 1.0)**: How much physical or cognitive load, time, and/or money does this save for the user?
+3. **Privacy (0.0 - 1.0)**: How much privacy does this intervention require? (e.g., a notification about a health metric or financial information is high privacy; a notification about weather or traffic is low privacy).
+4. **Estimated User Value (0.0 - 1.0)**: Stepping back and looking at all the other axes, how much do we estimate the user will value this intervention? (e.g., a notification about a family emergency is high value; a notification about something that would have been delightful for them to know but isn't particularly relevant to their current context is low value).

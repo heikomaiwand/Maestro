@@ -6,6 +6,7 @@ import PreviewPane from './components/PreviewPane'
 import LogicMapping from './components/LogicMapping'
 import ZeroState from './components/ZeroState'
 import ApiKeyModal from './components/ApiKeyModal'
+import DebugModal from './components/DebugModal'
 import { initialSignals, initialActions, initialSelectedAction, generateDataFromPrompt } from './services/simulationService'
 
 function App() {
@@ -60,42 +61,104 @@ function App() {
   }
 
 
+  const [showDebugModal, setShowDebugModal] = useState(false)
+
   const handleActionSelect = (action) => {
     setSelectedAction(action)
-    setActiveSurface(action.surfaces[0] || 'gmail')
+    const orch = orchestrationCache[action.id];
+    const topInterface = orch && orch !== 'loading' && orch !== 'error' && orch.where && Array.isArray(orch.where.rankedSurfaces) && orch.where.rankedSurfaces.length > 0
+      ? orch.where.rankedSurfaces[0]
+      : (action.surfaces[0] || 'gmail');
+    setActiveSurface(topInterface);
   }
+
+  useEffect(() => {
+    if (!selectedAction) return;
+    const orch = orchestrationCache[selectedAction.id];
+    if (orch && orch !== 'loading' && orch !== 'error') {
+      const topInterface = orch.where && Array.isArray(orch.where.rankedSurfaces) && orch.where.rankedSurfaces.length > 0
+        ? orch.where.rankedSurfaces[0]
+        : (selectedAction.surfaces[0] || 'gmail');
+      
+      setActiveSurface(prev => (prev !== topInterface ? topInterface : prev));
+    }
+  }, [selectedAction, orchestrationCache]);
 
   // Loop 2 Pre-Caching Engine
-  const useExperimental = localStorage.getItem('use_experimental_logic') === 'true';
-  
-  if (useExperimental) {
-    import('./services/geminiServiceExperimental').then(({ fetchOrchestrationFromExperimental }) => {
-      actions.forEach(action => {
-        if (!orchestrationCache[action.id]) {
-          setOrchestrationCache(prev => ({ ...prev, [action.id]: 'loading' }))
-          fetchOrchestrationFromExperimental(action).then(data => {
-            if (data) {
-              setOrchestrationCache(prev => ({ ...prev, [action.id]: data }))
-            }
-          })
-        }
-      })
+  import('./services/geminiService').then(({ fetchOrchestrationFromGemini }) => {
+    actions.forEach(action => {
+      if (!orchestrationCache[action.id]) {
+        setOrchestrationCache(prev => ({ ...prev, [action.id]: 'loading' }))
+        fetchOrchestrationFromGemini(action, scenario).then(data => {
+          if (data) {
+            setOrchestrationCache(prev => ({ ...prev, [action.id]: data }))
+          }
+        }).catch(err => {
+          console.error("Orchestration failed:", err);
+          setOrchestrationCache(prev => ({ ...prev, [action.id]: 'error' }))
+        })
+      }
     })
-  } else {
+  })
+
+  const retryOrchestration = (actionToRetry) => {
+    setOrchestrationCache(prev => ({ ...prev, [actionToRetry.id]: 'loading' }));
     import('./services/geminiService').then(({ fetchOrchestrationFromGemini }) => {
-      actions.forEach(action => {
-        if (!orchestrationCache[action.id]) {
-          setOrchestrationCache(prev => ({ ...prev, [action.id]: 'loading' }))
-          fetchOrchestrationFromGemini(action).then(data => {
-            if (data) {
-              setOrchestrationCache(prev => ({ ...prev, [action.id]: data }))
-            }
-          })
-        }
-      })
-    })
+      fetchOrchestrationFromGemini(actionToRetry, scenario).then(data => {
+        if (data) setOrchestrationCache(prev => ({ ...prev, [actionToRetry.id]: data }));
+      }).catch(err => {
+        console.error("Orchestration retry failed:", err);
+        setOrchestrationCache(prev => ({ ...prev, [actionToRetry.id]: 'error' }));
+      });
+    });
+  };  const [isSignalsModified, setIsSignalsModified] = useState(false)
+  const [isParsingSignal, setIsParsingSignal] = useState(false)
+  const [isRegenerating, setIsRegenerating] = useState(false)
+
+  const handleDeleteSignal = (id) => {
+    setSignals(prev => prev.filter(s => s.id !== id))
+    setIsSignalsModified(true)
   }
 
+  const handleAddSignalText = async (text) => {
+    setIsParsingSignal(true)
+    try {
+      const { parseAddedSignalsFromText } = await import('./services/geminiService')
+      const newParsedSignals = await parseAddedSignalsFromText(text, signals)
+      
+      const maxId = signals.reduce((acc, curr) => Math.max(acc, curr.id || 0), 0)
+      const mappedNewSignals = newParsedSignals.map((s, idx) => ({
+        ...s,
+        id: maxId + idx + 1
+      }))
+
+      setSignals(prev => [...prev, ...mappedNewSignals])
+      setIsSignalsModified(true)
+    } catch (err) {
+      console.error("Signal Parsing failed:", err)
+    } finally {
+      setIsParsingSignal(false)
+    }
+  }
+
+  const handleRegenerateRecommendations = async () => {
+    setIsRegenerating(true)
+    try {
+      const { regenerateActionsFromSignals } = await import('./services/geminiService')
+      const responseData = await regenerateActionsFromSignals(signals)
+      if (responseData && responseData.actions) {
+        setOrchestrationCache({}) 
+        setActions(responseData.actions)
+        setSelectedAction(responseData.actions[0] || null)
+        setActiveSurface(responseData.actions[0]?.surfaces[0] || 'gmail')
+        setIsSignalsModified(false)
+      }
+    } catch (err) {
+      console.error("Regeneration failed:", err)
+    } finally {
+      setIsRegenerating(false)
+    }
+  }
 
 
   const handlePromptSubmit = async (promptText) => {
@@ -149,7 +212,13 @@ function App() {
           onClose={() => setShowApiKeyModal(false)} 
         />
       )}
-      <TopBar onClearApiKey={handleClearApiKey} />
+      {showDebugModal && (
+        <DebugModal 
+          onClose={() => setShowDebugModal(false)} 
+          selectedAction={selectedAction} 
+        />
+      )}
+      <TopBar onClearApiKey={handleClearApiKey} onDebugClick={() => setShowDebugModal(true)} />
 
       {isZeroState && (
         <ZeroState 
@@ -166,7 +235,15 @@ function App() {
         <div className="left-pane" style={{ flexDirection: 'column', flex: `0 0 ${leftWidth}%`, borderRight: 'none', overflow: 'hidden', opacity: isFullScreen ? 0 : 1, transition: 'flex 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s ease-out' }}>
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fadeStage >= 1 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
-              <SignalColumn signals={signals} />
+              <SignalColumn 
+                signals={signals} 
+                onDeleteSignal={handleDeleteSignal}
+                onAddSignalText={handleAddSignalText}
+                onRegenerateRecommendations={handleRegenerateRecommendations}
+                isSignalsModified={isSignalsModified}
+                isParsingSignal={isParsingSignal}
+                isRegenerating={isRegenerating}
+              />
             </div>
             <div className="divider-vertical"></div>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fadeStage >= 2 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
@@ -222,7 +299,9 @@ function App() {
               onInfoClick={() => setShowLogic(true)}
               isFullScreen={isFullScreen}
               onFullScreenToggle={handleFullScreenToggle}
+              onRetry={() => retryOrchestration(selectedAction)}
             />
+
           )}
         </div>
 

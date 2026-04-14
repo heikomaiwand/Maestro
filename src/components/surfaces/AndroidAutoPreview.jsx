@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDynamicClock, useAnimateIn } from './shared';
 
-export const AndroidAutoPreview = ({ action }) => {
+export const AndroidAutoPreview = ({ action, orchData }) => {
+
   const containerRef = useRef(null);
   const [scale, setScale] = useState(0.6);
   const currentTime = useDynamicClock(action);
@@ -134,7 +135,9 @@ export const AndroidAutoPreview = ({ action }) => {
                     textOverflow: 'ellipsis'
                   }}
                 >
-                  {action.title}
+                  {orchData && orchData.how && (orchData.how.android_auto || orchData.how) 
+                    ? ((orchData.how.android_auto && (orchData.how.android_auto.Headline || orchData.how.android_auto.headline)) || (orchData.how && (orchData.how.Headline || orchData.how.headline)) || action.title) 
+                    : action.title}
                 </div>
                 <div 
                   style={{ 
@@ -149,8 +152,11 @@ export const AndroidAutoPreview = ({ action }) => {
                     textOverflow: 'ellipsis'
                   }}
                 >
-                  {action.why}
+                  {orchData && orchData.how && (orchData.how.android_auto || orchData.how) 
+                    ? ((orchData.how.android_auto && (orchData.how.android_auto.Subheading || orchData.how.android_auto.subheading)) || (orchData.how && (orchData.how.Subheading || orchData.how.subheading || orchData.how.message)) || action.why) 
+                    : action.why}
                 </div>
+
               </div>
             ) : (
               <div 

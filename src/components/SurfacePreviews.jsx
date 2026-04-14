@@ -20,23 +20,26 @@ import { GoogleCalendarPreview } from './surfaces/GoogleCalendarPreview';
 import { GoogleChatPreview } from './surfaces/GoogleChatPreview';
 import { GenericSurfacePlaceholder } from './surfaces/shared';
 
-export const getSurfacePreviewComponent = (surfaceId, action) => {
+export const getSurfacePreviewComponent = (surfaceId, action, cache = {}) => {
+  const orchData = action && cache ? cache[action.id] : null;
+
   switch (surfaceId) {
-    case 'phone_notification': return <PhoneNotificationPreview action={action} />;
-    case 'gemini_app': return <GeminiAppPreview action={action} />;
-    case 'gmail': return <GmailPreview action={action} />;
-    case 'android_auto': return <AndroidAutoPreview action={action} />;
-    case 'smart_display': return <SmartDisplayPreview action={action} />;
-    case 'smart_speaker': return <SmartSpeakerPreview action={action} />;
-    case 'pixel_buds': return <PixelBudsPreview action={action} />;
-    case 'watch_notification': return <WatchPreview action={action} />;
-    case 'pixel_launcher_discover': return <PixelLauncherDiscoverPreview action={action} />;
-    case 'chrome_side_panel': return <ChromeSidePanelPreview action={action} />;
-    case 'chrome_new_tab': return <ChromeNewTabPreview action={action} />;
-    case 'chromebook_os': return <ChromebookOsPreview action={action} />;
-    case 'googletv_streamer': return <GoogletvStreamerPreview action={action} />;
-    case 'google_calendar': return <GoogleCalendarPreview action={action} />;
-    case 'google_chat': return <GoogleChatPreview action={action} />;
+    case 'phone_notification': return <PhoneNotificationPreview action={action} orchData={orchData} />;
+    case 'gemini_app': return <GeminiAppPreview action={action} orchData={orchData} />;
+    case 'gmail': return <GmailPreview action={action} orchData={orchData} />;
+    case 'android_auto': return <AndroidAutoPreview action={action} orchData={orchData} />;
+    case 'smart_display': return <SmartDisplayPreview action={action} orchData={orchData} />;
+    case 'smart_speaker': return <SmartSpeakerPreview action={action} orchData={orchData} />;
+    case 'pixel_buds': return <PixelBudsPreview action={action} orchData={orchData} />;
+    case 'watch_notification': return <WatchPreview action={action} orchData={orchData} />;
+    case 'pixel_launcher_discover': return <PixelLauncherDiscoverPreview action={action} orchData={orchData} />;
+    case 'chrome_side_panel': return <ChromeSidePanelPreview action={action} orchData={orchData} />;
+    case 'chrome_new_tab': return <ChromeNewTabPreview action={action} orchData={orchData} />;
+    case 'chromebook_os': return <ChromebookOsPreview action={action} orchData={orchData} />;
+    case 'googletv_streamer': return <GoogletvStreamerPreview action={action} orchData={orchData} />;
+    case 'google_calendar': return <GoogleCalendarPreview action={action} orchData={orchData} />;
+    case 'google_chat': return <GoogleChatPreview action={action} orchData={orchData} />;
     default: return <GenericSurfacePlaceholder label="Unknown surface" />;
   }
 };
+

@@ -1,11 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDynamicClock, useAnimateIn, GeminiSparkIcon } from './shared';
 
-export const PhoneNotificationPreview = ({ action }) => {
+export const PhoneNotificationPreview = ({ action, orchData }) => {
   const containerRef = useRef(null);
   const [scale, setScale] = useState(0.6);
   const currentTime = useDynamicClock(action);
   const animateStyle = useAnimateIn(action);
+
+  const howData = orchData && orchData.how ? orchData.how : null;
+  const specific = howData ? (howData.phone_notification || howData) : null;
+  const displayTitle = specific ? (specific.Headline || specific.headline || specific.title || action?.title || 'Notification') : (action?.title || 'Notification');
+  const displayWhy = specific ? (specific.Subheading || specific.subheading || specific.message || action?.why || '') : (action?.why || '');
+  const displayAction1 = specific ? (specific.action1 || specific.Action1 || specific['Action 1'] || specific.Action || '') : 'Review';
+  const displayAction2 = specific ? (specific.action2 || specific.Action2 || specific['Action 2'] || '') : 'Dismiss';
 
   useEffect(() => {
     const updateScale = () => {
@@ -95,52 +102,52 @@ export const PhoneNotificationPreview = ({ action }) => {
           </div>
 
           {/* Suggested Primitive (Gemini Notification) */}
-          {action && (
-            <div 
-              style={{ 
-                position: 'absolute',
-                backgroundColor: '#f7ecfe', 
-                ...animateStyle, 
-                left: '16px', 
-                right: '16px',
-                top: '326px', 
-                padding: '16px', 
-                borderRadius: '30px',
-                display: 'flex',
-                gap: '13px',
-                alignItems: 'flex-start',
-                boxSizing: 'border-box',
-                boxShadow: '0 4px 12px rgba(86, 41, 164, 0.05)'
-              }}
-            >
-              {/* Spark Icon */}
-              <div style={{ backgroundColor: '#d9bafd', padding: '3px', borderRadius: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', flexShrink: 0 }}>
-                <GeminiSparkIcon size={16} color="#5629a4" />
-              </div>
-
-              {/* Notification Details */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, letterSpacing: '0.12px' }}>
-                  Gemini • now
-                </div>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <div style={{ fontSize: '16px', color: '#5629a4', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Google Sans, sans-serif' }}>
-                    {action.title}
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#7438d2', lineHeight: '1.3', fontFamily: 'Google Sans, sans-serif' }}>
-                    {action.why}
-                  </div>
-                </div>
-
-                {/* Actionable Buttons */}
-                <div style={{ display: 'flex', gap: '24px', marginTop: '8px', fontSize: '12px', color: '#5629a4', fontWeight: 600 }}>
-                  <div style={{ cursor: 'pointer' }}>Review</div>
-                  <div style={{ cursor: 'pointer' }}>Dismiss</div>
-                </div>
-              </div>
+          <div 
+            style={{ 
+              position: 'absolute',
+              backgroundColor: '#f7ecfe', 
+              ...animateStyle, 
+              left: '16px', 
+              right: '16px',
+              top: '326px', 
+              padding: '16px', 
+              borderRadius: '30px',
+              display: 'flex',
+              gap: '13px',
+              alignItems: 'flex-start',
+              boxSizing: 'border-box',
+              boxShadow: '0 4px 12px rgba(86, 41, 164, 0.05)'
+            }}
+          >
+            {/* Spark Icon */}
+            <div style={{ backgroundColor: '#d9bafd', padding: '3px', borderRadius: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', flexShrink: 0 }}>
+              <GeminiSparkIcon size={16} color="#5629a4" />
             </div>
-          )}
+
+            {/* Notification Details */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, letterSpacing: '0.12px' }}>
+                Gemini • now
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <div style={{ fontSize: '16px', color: '#5629a4', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Google Sans, sans-serif' }}>
+                  {displayTitle}
+                </div>
+                <div style={{ fontSize: '14px', color: '#7438d2', lineHeight: '1.3', fontFamily: 'Google Sans, sans-serif' }}>
+                  {displayWhy}
+                </div>
+              </div>
+
+              {/* Actionable Buttons */}
+              {(displayAction1 || displayAction2) && (
+                <div style={{ display: 'flex', gap: '24px', marginTop: '8px', fontSize: '12px', color: '#5629a4', fontWeight: 600 }}>
+                  {displayAction1 && <div style={{ cursor: 'pointer' }}>{displayAction1}</div>}
+                  {displayAction2 && <div style={{ cursor: 'pointer' }}>{displayAction2}</div>}
+                </div>
+              )}
+            </div>
+          </div>
 
         </div>
       </div>

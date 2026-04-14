@@ -1,5 +1,5 @@
 import { fetchDataFromGemini } from './geminiService'
-import { fetchDataFromExperimental } from './geminiServiceExperimental'
+
 
 export const initialSignals = [
   { id: 1, name: 'Location', value: 'Home', category: 'User signals', sources: ['Phone location', 'Maps stored location'], confidence: 1.0, whyItMatters: 'Helps determine if you are available or in transit.' },
@@ -20,21 +20,19 @@ export const initialSelectedAction = initialActions[0]
 
 export const generateDataFromPrompt = async (promptText) => {
   try {
-    const useExperimental = localStorage.getItem('use_experimental_logic') === 'true';
-    const liveData = useExperimental 
-      ? await fetchDataFromExperimental(promptText) 
-      : await fetchDataFromGemini(promptText);
+    const liveData = await fetchDataFromGemini(promptText);
 
     if (liveData) {
       return liveData;
-
     }
   } catch (error) {
     console.error('Gemini API call failed:', error);
-    throw error; // Propagate error to trigger UI snackbar
+    throw error;
   }
 
+  throw new Error("Gemini failed to return valid JSON.");
 }
+
 
 
 

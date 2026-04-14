@@ -34,9 +34,12 @@ export default function LogicMapping({ selectedAction, orchestrationCache = {}, 
                 </div>
                 <hr style={{ border: 'none', borderTop: '1px solid var(--sys-color-outline-variant)', margin: '4px 0' }} />
                 <div>
-                  <strong style={{ color: 'var(--sys-color-on-surface)' }}>How:</strong> {oData.how?.style}
-                  <div style={{ fontSize: '13px', marginTop: '4px', opacity: 0.8 }}>{oData.how?.message}</div>
+                  <strong style={{ color: 'var(--sys-color-on-surface)' }}>How (Multi-Surface Primitive Payload):</strong>
+                  <pre style={{ fontSize: '12px', marginTop: '8px', backgroundColor: 'var(--sys-color-surface)', padding: '12px', borderRadius: '8px', overflowX: 'auto', border: '1px solid var(--sys-color-outline-variant)', fontFamily: 'monospace', color: 'var(--sys-color-on-surface)' }}>
+                    {JSON.stringify(oData.how, null, 2)}
+                  </pre>
                 </div>
+
               </div>
             );
           })()}

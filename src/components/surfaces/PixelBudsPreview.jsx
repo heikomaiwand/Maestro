@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useAnimateIn } from './shared';
 import PixelBudGraphic from '../../assets/PixelBudGraphic.svg';
 
-export const PixelBudsPreview = ({ action }) => {
+export const PixelBudsPreview = ({ action, orchData }) => {
+
   const containerRef = useRef(null);
   const [scale, setScale] = useState(1);
   const animateStyle = useAnimateIn(action);
@@ -116,8 +117,12 @@ export const PixelBudsPreview = ({ action }) => {
               }}
             >
               <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontFamily: 'Google Sans, sans-serif', fontWeight: 400 }}>
-                "{action.why}"
+                "{orchData && orchData.how && (orchData.how.pixel_buds || orchData.how) 
+                  ? ((orchData.how.pixel_buds && (orchData.how.pixel_buds["Text-to-speech"] || orchData.how.pixel_buds.TextToSpeech || orchData.how.pixel_buds.text_to_speech)) || (orchData.how && (orchData.how["Text-to-speech"] || orchData.how.TextToSpeech || orchData.how.text_to_speech)) || action.why) 
+                  : action.why}"
               </div>
+
+
             </div>
             
           </div>

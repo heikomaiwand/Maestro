@@ -30,7 +30,7 @@ export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, in
       }, 500) // Wait half a second for the fade-out before switching text
     }, 6000)
     return () => clearInterval(interval)
-  }, [])
+  }, [currentIndex])
 
   const handleSubmit = () => {
     if (promptText.trim()) {
@@ -46,6 +46,15 @@ export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, in
     if (e.key === 'Tab' && !promptText) {
       e.preventDefault()
       setPromptText(SUGGESTED_PROMPTS[currentIndex])
+    }
+    if (!promptText) {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        setCurrentIndex((prev) => (prev + 1) % SUGGESTED_PROMPTS.length)
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        setCurrentIndex((prev) => (prev - 1 + SUGGESTED_PROMPTS.length) % SUGGESTED_PROMPTS.length)
+      }
     }
   }
 
