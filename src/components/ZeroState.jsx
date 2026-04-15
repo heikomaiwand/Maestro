@@ -12,20 +12,48 @@ export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, in
     if (textareaRef.current) {
       textareaRef.current.focus()
     }
-  }, [])
+
+    const handleGlobalKeyDown = (e) => {
+      // If modal is active, capture all keyboard inputs
+      if (document.activeElement !== textareaRef.current) {
+        if (e.key === 'Alt' || e.key === 'Control' || e.key === 'Meta' || e.key === 'Shift') return;
+        
+        // Prevent default tab cycling if input is empty and we want to apply auto-suggest
+        if (e.key === 'Tab' && !promptText) {
+          e.preventDefault();
+          setPromptText(SUGGESTED_PROMPTS[currentIndex]);
+          textareaRef.current.focus();
+          return;
+        }
+
+        if (e.key === 'ArrowRight' && !promptText) {
+          e.preventDefault();
+          setCurrentIndex((prev) => (prev + 1) % SUGGESTED_PROMPTS.length);
+          textareaRef.current.focus();
+          return;
+        }
+
+        if (e.key === 'ArrowLeft' && !promptText) {
+          e.preventDefault();
+          setCurrentIndex((prev) => (prev - 1 + SUGGESTED_PROMPTS.length) % SUGGESTED_PROMPTS.length);
+          textareaRef.current.focus();
+          return;
+        }
+
+        textareaRef.current.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleGlobalKeyDown);
+    return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [promptText, currentIndex])
 
   // Cycle through suggestions every 6 seconds with a smooth fade
   useEffect(() => {
     const interval = setInterval(() => {
       setIsFading(true)
       setTimeout(() => {
-        setCurrentIndex((prevIndex) => {
-          let next = Math.floor(Math.random() * SUGGESTED_PROMPTS.length)
-          while (next === prevIndex && SUGGESTED_PROMPTS.length > 1) {
-            next = Math.floor(Math.random() * SUGGESTED_PROMPTS.length)
-          }
-          return next
-        })
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % SUGGESTED_PROMPTS.length)
         setIsFading(false)
       }, 500) // Wait half a second for the fade-out before switching text
     }, 6000)

@@ -179,6 +179,33 @@ export default function TopBar({ onClearApiKey, onDebugClick }) {
                   <option value="gemini-2.0-pro-exp">gemini-2.0-pro-exp</option>
                 </select>
               </div>
+
+              <div style={{ padding: '8px 20px', display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--sys-color-outline-variant)' }}>
+                <a 
+                  href="http://who/heikomaiwand" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  style={{ 
+                    textDecoration: 'none',
+                    color: 'var(--sys-color-outline-variant)'
+                  }}
+                  onMouseEnter={(e) => {
+                    const sp = e.currentTarget.querySelector('span');
+                    if (sp) sp.style.textDecoration = 'underline';
+                  }}
+                  onMouseLeave={(e) => {
+                    const sp = e.currentTarget.querySelector('span');
+                    if (sp) sp.style.textDecoration = 'none';
+                  }}
+                >
+                  <span style={{ 
+                    fontSize: '11px', 
+                    fontWeight: 400
+                  }}>
+                    Heiko Maiwand
+                  </span>
+                </a>
+              </div>
             </div>
           )}
         </div>

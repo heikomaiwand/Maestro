@@ -10,7 +10,7 @@ When evaluating a scenario, the engine must generate an exhaustive list of poten
 
 ### Categorization Framework
 *   **Explicit Input**: Direct user interactions (e.g., speaking to Gemini, typing an address in Android Auto, searching on Google).
-    *   *CRITICAL NEGATIVE CONSTRAINT*: Do NOT classify events as "Explicit Input" unless the scenario specifically mentions the user commanding a device. Narrations of natural events (e.g., "Groceries arrived" or "I open the door") are NOT explicit inputs. Do NOT use "User utterance" as a source unless the prompt says "The user says/asks...".
+    *   *CRITICAL NEGATIVE CONSTRAINT*: Do NOT classify events as "Explicit Input" unless the scenario specifically mentions the user commanding a device or having spoken about this in the past. Narrations of natural events (e.g., "Groceries arrived" or "I open the door") are NOT explicit inputs. Do NOT use "User utterance" as a source unless the prompt says "The user says/asks...".
 *   **User Signals**: State of the individual (e.g., biometrics, current activity, location, passive ambient audio, screen context).
 *   **Environmental Context**: State of the surroundings (e.g., room temperature, proximity to specific home devices, how many people are at home, noise levels, physical object detection via Smart Home Vision/Cameras).
 *   **Relevant Preferences**: Long-term knowledge (e.g., routine timing, favorite playlists, dietary restrictions).

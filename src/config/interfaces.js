@@ -120,10 +120,12 @@ export const SURFACES = [
     surfaces: ['computer'],
     timing: 'Appropriate for "Contextual" cues related to the user\'s currently active browser tab.',
     private: true,
-    interactivity: 'Highly interactive companion for copy-pasting and reading alongside main content.',
+    interactivity: 'Highly interactive companion for copy-pasting and reading alongside main content or suggesting agentic actions in context of current browser tab',
     primitiveContent: [
       'Headline (max 60 characters)',
-      'Subheading (max 150 characters)'
+      'Subheading (max 150 characters)',
+      'Action 1 (max 16 characters)',
+      'Action 2 (max 16 characters)'
     ]
   },
   {
@@ -162,7 +164,6 @@ export const SURFACES = [
     modality: ['textual', 'audio'],
     surfaces: ['tv'],
     timing: 'Appropriate for "Immediate" alerts when actively watching, "Contextual" living room cues, or "Passive" screensaver updates.',
-
     private: false,
     interactivity: 'Low interaction. Relies purely on D-pad navigation on a remote control.',
     primitiveContent: [

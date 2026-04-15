@@ -23,6 +23,8 @@ CRITICAL RULES:
 1. Try to always generate a list of exactly 3 to 5 distinct recommendations in the "actions" array. Only generate fewer if no other recommendations are appropriate.
 2. The "why" field for recommendations MUST always be written in the 3rd person, describing the user objectively (e.g., "The user is approaching the dark house" or "Their daughter is locked out").
 3. For the 'surfaces' array, you MUST ONLY use the exact string IDs provided in the schema definition below. DO NOT invent your own IDs (e.g., do not output "watch", you must output "watch_notification").
+4. The prompt you receive is a PROTOTYPE SCENARIO describing a situation. Do NOT treat the prompt text as a literal direct user utterance or command unless it explicitly states "The user says/commands...".
+
 
 
 Output your response in STRICT JSON format matching the schema below. Follow the inline comments exactly to locate the corresponding master guidelines.

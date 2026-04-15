@@ -8,6 +8,7 @@
   --sys-color-on-secondary-container: #001d35;
   --sys-color-on-surface: #1f1f1f;
   --sys-color-on-surface-variant: #444746;
+  --sys-color-outline: #747775;
   --sys-color-outline-variant: #c4c7c5;
   
   --font-sans: 'Google Sans Flex', 'Google Sans Text', 'Google Sans', 'Inter', system-ui, sans-serif;
@@ -64,6 +65,7 @@
   --sys-color-on-secondary-container: #c2e7ff;
   --sys-color-on-surface: #e3e3e3;
   --sys-color-on-surface-variant: #c4c7c5;
+  --sys-color-outline: #8e918f;
   --sys-color-outline-variant: #444746;
 
   /* Figma Lo-Fi Core Primitive Variables (Synchronized perfectly to UX design sheet - Dark Mode) */
