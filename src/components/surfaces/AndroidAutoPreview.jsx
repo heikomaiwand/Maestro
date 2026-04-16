@@ -1,12 +1,72 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDynamicClock, useAnimateIn } from './shared';
 
-export const AndroidAutoPreview = ({ action, orchData }) => {
+const AndroidAutoPrimitive = ({ headline, subheading, animateStyle }) => {
+  return (
+    <div 
+      style={{ 
+        flex: 1,
+        minHeight: 0,
+        backgroundColor: 'var(--lofi-color2)', 
+        borderRadius: '24px', 
+        padding: '24px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'flex-start',
+        gap: '8px',
+        boxSizing: 'border-box',
+        overflow: 'hidden',
+        ...animateStyle
+      }}
+    >
+      <div 
+        style={{ 
+          fontSize: '32px', 
+          color: 'var(--lofi-color8)', 
+          fontWeight: 600, 
+          fontFamily: 'Google Sans, sans-serif',
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }}
+      >
+        {headline}
+      </div>
+      <div 
+        style={{ 
+          fontSize: '20px', 
+          color: 'var(--lofi-color8)', 
+          lineHeight: '1.4', 
+          fontFamily: 'Google Sans, sans-serif',
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }}
+      >
+        {subheading}
+      </div>
+    </div>
+  );
+};
+
+export const AndroidAutoPreview = ({ action, orchData, showPrimitive }) => {
 
   const containerRef = useRef(null);
   const [scale, setScale] = useState(0.6);
   const currentTime = useDynamicClock(action);
   const animateStyle = useAnimateIn(action);
+
+  const headline = orchData && orchData.how && (orchData.how.android_auto || orchData.how) 
+    ? ((orchData.how.android_auto && (orchData.how.android_auto.Headline || orchData.how.android_auto.headline)) || (orchData.how && (orchData.how.Headline || orchData.how.headline)) || action?.title || 'Header') 
+    : (action?.title || 'Header');
+
+  const subheading = orchData && orchData.how && (orchData.how.android_auto || orchData.how) 
+    ? ((orchData.how.android_auto && (orchData.how.android_auto.Subheading || orchData.how.android_auto.subheading)) || (orchData.how && (orchData.how.Subheading || orchData.how.subheading || orchData.how.message)) || action?.why || 'Subtitle') 
+    : (action?.why || 'Subtitle');
 
   useEffect(() => {
     const updateScale = () => {
@@ -105,72 +165,25 @@ export const AndroidAutoPreview = ({ action, orchData }) => {
           {/* 50/50 Split Utility Cards */}
           <div style={{ width: '456px', display: 'flex', flexDirection: 'column', gap: '18px', height: '100%' }}>
 
-            {action ? (
-              <div 
-                style={{ 
-                  flex: 1,
-                  minHeight: 0,
-                  backgroundColor: 'var(--lofi-color2)', 
-                  borderRadius: '24px', 
-                  padding: '24px', 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  justifyContent: 'flex-start',
-                  gap: '8px',
-                  boxSizing: 'border-box',
-                  overflow: 'hidden',
-                  ...animateStyle
-                }}
-              >
-                <div 
-                  style={{ 
-                    fontSize: '32px', 
-                    color: 'var(--lofi-color8)', 
-                    fontWeight: 600, 
-                    fontFamily: 'Google Sans, sans-serif',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}
-                >
-                  {orchData && orchData.how && (orchData.how.android_auto || orchData.how) 
-                    ? ((orchData.how.android_auto && (orchData.how.android_auto.Headline || orchData.how.android_auto.headline)) || (orchData.how && (orchData.how.Headline || orchData.how.headline)) || action.title) 
-                    : action.title}
-                </div>
-                <div 
-                  style={{ 
-                    fontSize: '20px', 
-                    color: 'var(--lofi-color8)', 
-                    lineHeight: '1.4', 
-                    fontFamily: 'Google Sans, sans-serif',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}
-                >
-                  {orchData && orchData.how && (orchData.how.android_auto || orchData.how) 
-                    ? ((orchData.how.android_auto && (orchData.how.android_auto.Subheading || orchData.how.android_auto.subheading)) || (orchData.how && (orchData.how.Subheading || orchData.how.subheading || orchData.how.message)) || action.why) 
-                    : action.why}
-                </div>
-
-              </div>
+            {showPrimitive ? (
+              <AndroidAutoPrimitive 
+                headline={headline}
+                subheading={subheading}
+                animateStyle={animateStyle}
+              />
             ) : (
               <div 
                 style={{ 
                   flex: 1,
                   minHeight: 0,
-                    backgroundColor: 'var(--lofi-container1)', 
+                  backgroundColor: 'var(--lofi-container1)', 
                   borderRadius: '24px', 
                   padding: '24px', 
                   display: 'flex', 
                   flexDirection: 'column', 
                   justifyContent: 'space-between',
                   boxSizing: 'border-box',
-                    border: '1px solid var(--lofi-container5)'
+                  border: '1px solid var(--lofi-container5)'
                 }}
               >
                   <div style={{ fontFamily: 'Redacted, sans-serif', fontSize: '28px', color: 'var(--lofi-text3)' }}>In 500 feet</div>

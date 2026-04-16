@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-export default function TopBar({ onClearApiKey, onDebugClick }) {
+export default function TopBar({ onClearApiKey, onDebugClick, onShowTour }) {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showMenu, setShowMenu] = useState(false);
@@ -133,6 +133,36 @@ export default function TopBar({ onClearApiKey, onDebugClick }) {
               >
                 <span>Change theme</span>
                 <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>tonality</span>
+              </button>
+
+              <button 
+                className="btn btn-text"
+                onClick={() => {
+                  const current = localStorage.getItem('showGuidedTour');
+                  const newValue = (current === 'false') ? 'true' : 'false';
+                  localStorage.setItem('showGuidedTour', newValue);
+                  
+                  // If turning it on, trigger it if possible
+                  if (newValue === 'true' && onShowTour) {
+                    onShowTour();
+                  }
+                  setShowMenu(false);
+                }}
+                style={{ 
+                  justifyContent: 'space-between', 
+                  width: '100%', 
+                  padding: '12px 20px', 
+                  borderRadius: 0,
+                  color: 'var(--sys-color-on-surface)',
+                  fontWeight: 400
+                }}
+              >
+                <span>Show guided tour</span>
+                {(localStorage.getItem('showGuidedTour') === 'true' || localStorage.getItem('showGuidedTour') === null) ? (
+                  <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>check_box</span>
+                ) : (
+                  <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>check_box_outline_blank</span>
+                )}
               </button>
 
 

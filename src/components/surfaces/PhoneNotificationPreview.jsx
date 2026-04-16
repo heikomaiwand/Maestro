@@ -1,7 +1,58 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDynamicClock, useAnimateIn, GeminiSparkIcon } from './shared';
 
-export const PhoneNotificationPreview = ({ action, orchData }) => {
+const PhoneNotificationPrimitive = ({ displayTitle, displayWhy, displayAction1, displayAction2, animateStyle }) => {
+  return (
+    <div 
+      style={{ 
+        position: 'absolute',
+        backgroundColor: '#f7ecfe', 
+        ...animateStyle, 
+        left: '16px', 
+        right: '16px',
+        top: '326px', 
+        padding: '16px', 
+        borderRadius: '30px',
+        display: 'flex',
+        gap: '13px',
+        alignItems: 'flex-start',
+        boxSizing: 'border-box',
+        boxShadow: '0 4px 12px rgba(86, 41, 164, 0.05)'
+      }}
+    >
+      {/* Spark Icon */}
+      <div style={{ backgroundColor: '#d9bafd', padding: '3px', borderRadius: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', flexShrink: 0 }}>
+        <GeminiSparkIcon size={16} color="#5629a4" />
+      </div>
+
+      {/* Notification Details */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, letterSpacing: '0.12px' }}>
+          Gemini • now
+        </div>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ fontSize: '16px', color: '#5629a4', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Google Sans, sans-serif' }}>
+            {displayTitle}
+          </div>
+          <div style={{ fontSize: '14px', color: '#7438d2', lineHeight: '1.3', fontFamily: 'Google Sans, sans-serif' }}>
+            {displayWhy}
+          </div>
+        </div>
+
+        {/* Actionable Buttons */}
+        {(displayAction1 || displayAction2) && (
+          <div style={{ display: 'flex', gap: '24px', marginTop: '8px', fontSize: '12px', color: '#5629a4', fontWeight: 600 }}>
+            {displayAction1 && <div style={{ cursor: 'pointer' }}>{displayAction1}</div>}
+            {displayAction2 && <div style={{ cursor: 'pointer' }}>{displayAction2}</div>}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const PhoneNotificationPreview = ({ action, orchData, showPrimitive }) => {
   const containerRef = useRef(null);
   const [scale, setScale] = useState(0.6);
   const currentTime = useDynamicClock(action);
@@ -102,52 +153,15 @@ export const PhoneNotificationPreview = ({ action, orchData }) => {
           </div>
 
           {/* Suggested Primitive (Gemini Notification) */}
-          <div 
-            style={{ 
-              position: 'absolute',
-              backgroundColor: '#f7ecfe', 
-              ...animateStyle, 
-              left: '16px', 
-              right: '16px',
-              top: '326px', 
-              padding: '16px', 
-              borderRadius: '30px',
-              display: 'flex',
-              gap: '13px',
-              alignItems: 'flex-start',
-              boxSizing: 'border-box',
-              boxShadow: '0 4px 12px rgba(86, 41, 164, 0.05)'
-            }}
-          >
-            {/* Spark Icon */}
-            <div style={{ backgroundColor: '#d9bafd', padding: '3px', borderRadius: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', flexShrink: 0 }}>
-              <GeminiSparkIcon size={16} color="#5629a4" />
-            </div>
-
-            {/* Notification Details */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, letterSpacing: '0.12px' }}>
-                Gemini • now
-              </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ fontSize: '16px', color: '#5629a4', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Google Sans, sans-serif' }}>
-                  {displayTitle}
-                </div>
-                <div style={{ fontSize: '14px', color: '#7438d2', lineHeight: '1.3', fontFamily: 'Google Sans, sans-serif' }}>
-                  {displayWhy}
-                </div>
-              </div>
-
-              {/* Actionable Buttons */}
-              {(displayAction1 || displayAction2) && (
-                <div style={{ display: 'flex', gap: '24px', marginTop: '8px', fontSize: '12px', color: '#5629a4', fontWeight: 600 }}>
-                  {displayAction1 && <div style={{ cursor: 'pointer' }}>{displayAction1}</div>}
-                  {displayAction2 && <div style={{ cursor: 'pointer' }}>{displayAction2}</div>}
-                </div>
-              )}
-            </div>
-          </div>
+          {showPrimitive && (
+            <PhoneNotificationPrimitive 
+              displayTitle={displayTitle}
+              displayWhy={displayWhy}
+              displayAction1={displayAction1}
+              displayAction2={displayAction2}
+              animateStyle={animateStyle}
+            />
+          )}
 
         </div>
       </div>

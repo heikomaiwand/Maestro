@@ -2,7 +2,70 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useAnimateIn } from './shared';
 import SmartSpeaker from '../../assets/SmartSpeaker.svg';
 
-export const SmartSpeakerPreview = ({ action, orchData }) => {
+const SmartSpeakerPrimitive = ({ text, animateStyle }) => {
+  return (
+    <div 
+      style={{ 
+        position: 'relative',
+        marginTop: '24px',
+        width: '820px',
+        ...animateStyle
+      }}
+    >
+      {/* Authentic Spoken Cue Tail (pointing upward toward the graphic) */}
+      <div 
+        style={{
+          position: 'absolute',
+          top: '-16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 0,
+          height: 0,
+          borderLeft: '16px solid transparent',
+          borderRight: '16px solid transparent',
+          borderBottom: '18px solid var(--lofi-color2)',
+          zIndex: 1
+        }}
+      />
+      {/* White inner mask to keep the tail hollow/bordered */}
+      <div 
+        style={{
+          position: 'absolute',
+          top: '-13px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 0,
+          height: 0,
+          borderLeft: '14px solid transparent',
+          borderRight: '14px solid transparent',
+          borderBottom: '16px solid var(--lofi-color1)',
+          zIndex: 2
+        }}
+      />
+
+      {/* The Speech Bubble Box */}
+      <div 
+        style={{
+          backgroundColor: 'var(--lofi-color1)',
+          border: '2px solid var(--lofi-color2)',
+          borderRadius: '16px',
+          padding: '24px 32px',
+          boxShadow: '0 8px 24px rgba(86, 41, 164, 0.04)',
+          display: 'flex',
+          alignItems: 'center',
+          position: 'relative',
+          zIndex: 3
+        }}
+      >
+        <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontFamily: 'Google Sans, sans-serif', fontWeight: 400 }}>
+          "{text}"
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const SmartSpeakerPreview = ({ action, orchData, showPrimitive }) => {
 
   const containerRef = useRef(null);
   const [scale, setScale] = useState(1);
@@ -66,68 +129,11 @@ export const SmartSpeakerPreview = ({ action, orchData }) => {
         </div>
 
         {/* Floating Spoken Cue layer */}
-        {action && (
-          <div 
-            style={{ 
-              position: 'relative',
-              marginTop: '24px',
-              width: '820px',
-              ...animateStyle
-            }}
-          >
-            {/* Authentic Spoken Cue Tail (pointing upward toward the graphic) */}
-            <div 
-              style={{
-                position: 'absolute',
-                top: '-16px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: 0,
-                height: 0,
-                borderLeft: '16px solid transparent',
-                borderRight: '16px solid transparent',
-                borderBottom: '18px solid var(--lofi-color2)',
-                zIndex: 1
-              }}
-            />
-            {/* White inner mask to keep the tail hollow/bordered */}
-            <div 
-              style={{
-                position: 'absolute',
-                top: '-13px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: 0,
-                height: 0,
-                borderLeft: '14px solid transparent',
-                borderRight: '14px solid transparent',
-                borderBottom: '16px solid var(--lofi-color1)',
-                zIndex: 2
-              }}
-            />
-
-            {/* The Speech Bubble Box */}
-            <div 
-              style={{
-                backgroundColor: 'var(--lofi-color1)',
-                border: '2px solid var(--lofi-color2)',
-                borderRadius: '16px',
-                padding: '24px 32px',
-                boxShadow: '0 8px 24px rgba(86, 41, 164, 0.04)',
-                display: 'flex',
-                alignItems: 'center',
-                position: 'relative',
-                zIndex: 3
-              }}
-            >
-              <div style={{ fontSize: '24px', color: 'var(--lofi-color8)', fontFamily: 'Google Sans, sans-serif', fontWeight: 400 }}>
-                "{displayTTS}"
-              </div>
-
-
-            </div>
-            
-          </div>
+        {showPrimitive && (
+          <SmartSpeakerPrimitive 
+            text={displayTTS}
+            animateStyle={animateStyle}
+          />
         )}
 
       </div>

@@ -1,7 +1,120 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useAnimateIn } from './shared';
 
-export const ChromeSidePanelPreview = ({ action, orchData }) => {
+const ChromeSidePanelPrimitive = ({ displayTitle, displaySubtitle, displayAction1, displayAction2, animateStyle }) => {
+  return (
+    <div style={{
+      width: '315px',
+      backgroundColor: 'var(--lofi-color2)',
+      border: '1px solid var(--lofi-color3)',
+      borderRadius: '12px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      padding: '8px',
+      boxSizing: 'border-box'
+    }}>
+      {/* Window Floating Controls */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '6px', color: 'var(--lofi-tint-color3)', padding: '4px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '20px', cursor: 'pointer' }}>more_vert</span>
+        <span className="material-symbols-outlined" style={{ fontSize: '16.67px', cursor: 'pointer', fontVariationSettings: "'FILL' 1, 'GRAD' 0, 'ROND' 100, 'opsz' 24" }}>dock_to_left</span>
+        <span className="material-symbols-outlined" style={{ fontSize: '20px', cursor: 'pointer' }}>close</span>
+      </div>
+
+      {/* Middle Prompt suggested workspace details */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '100px 8px 20px 8px',
+        gap: '12px',
+        ...animateStyle
+      }}>
+        {/* Gemini Logo */}
+        <div style={{
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          backgroundColor: '#fff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+        }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: 'var(--lofi-color4)', borderRadius: '50%' }} />
+        </div>
+        
+        {/* Title */}
+        <div style={{ fontSize: '20px', fontWeight: 500, color: 'var(--lofi-color9)', fontFamily: "'Google Sans Flex', sans-serif" }}>
+          {displayTitle}
+        </div>
+        
+        {/* Subtitle */}
+        <div style={{ fontSize: '14px', color: 'var(--lofi-color8)', fontFamily: "'Google Sans Flex', sans-serif" }}>
+          {displaySubtitle}
+        </div>
+      </div>
+
+      {/* Suggestions buttons */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+        {displayAction1 && (
+          <button style={{
+            alignSelf: 'flex-start',
+            backgroundColor: 'var(--lofi-tint-color1)',
+            border: 'none',
+            borderRadius: '50px',
+            padding: '8px 16px',
+            fontSize: '14px',
+            fontWeight: 500,
+            color: 'var(--lofi-color9)',
+            cursor: 'pointer',
+            fontFamily: "'Google Sans Flex', sans-serif"
+          }}>
+            {displayAction1}
+          </button>
+        )}
+        {displayAction2 && (
+          <button style={{
+            alignSelf: 'flex-start',
+            backgroundColor: 'var(--lofi-tint-color1)',
+            border: 'none',
+            borderRadius: '50px',
+            padding: '8px 16px',
+            fontSize: '14px',
+            fontWeight: 500,
+            color: 'var(--lofi-color9)',
+            cursor: 'pointer',
+            fontFamily: "'Google Sans Flex', sans-serif"
+          }}>
+            {displayAction2}
+          </button>
+        )}
+      </div>
+
+      {/* Text Input Footer Field */}
+      <div style={{
+        border: '1px solid var(--lofi-color4)',
+        borderRadius: '10px',
+        padding: '12px',
+        backgroundColor: 'var(--lofi-surface)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px'
+      }}>
+        <div style={{ fontSize: '14px', color: 'var(--lofi-color5)', opacity: 0.5, fontFamily: "'Google Sans Flex', sans-serif" }}>
+          Type @ to ask about a tab
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span className="material-symbols-outlined" style={{ fontSize: '16.67px', color: 'var(--lofi-tint-color3)', cursor: 'pointer' }}>add</span>
+          <div style={{ width: '40px', height: '16px', backgroundColor: 'var(--lofi-tint-color2)', borderRadius: '4px' }} />
+        </div>
+      </div>
+
+    </div>
+  );
+};
+
+export const ChromeSidePanelPreview = ({ action, orchData, showPrimitive }) => {
   const containerRef = useRef(null);
   const [scale, setScale] = useState(1);
   const animateStyle = useAnimateIn(action);
@@ -153,99 +266,15 @@ export const ChromeSidePanelPreview = ({ action, orchData }) => {
           <div style={{ flex: 1, backgroundColor: 'var(--lofi-surface)' }} />
 
           {/* Gemini Side Dock Interface (Suggestions Drawer) */}
-          <div style={{
-            width: '315px',
-            backgroundColor: 'var(--lofi-color2)',
-            border: '1px solid var(--lofi-color3)',
-            borderRadius: '12px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            padding: '8px',
-            boxSizing: 'border-box'
-          }}>
-            {/* Window Floating Controls */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '6px', color: 'var(--lofi-tint-color3)', padding: '4px' }}>
-              <span className="material-symbols-outlined" style={{ fontSize: '20px', cursor: 'pointer' }}>more_vert</span>
-              <span className="material-symbols-outlined" style={{ fontSize: '16.67px', cursor: 'pointer', fontVariationSettings: "'FILL' 1, 'GRAD' 0, 'ROND' 100, 'opsz' 24" }}>dock_to_left</span>
-              <span className="material-symbols-outlined" style={{ fontSize: '20px', cursor: 'pointer' }}>close</span>
-            </div>
-
-            {/* Middle Prompt suggested workspace details */}
-            <div style={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              padding: '100px 8px 20px 8px',
-              gap: '12px',
-              ...animateStyle
-            }}>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: '24px', fontWeight: 500, color: 'var(--lofi-color9)', lineHeight: '32px', fontFamily: "'Google Sans Flex', sans-serif" }}>
-                  {displayTitle}
-                </div>
-                <div style={{ fontSize: '20px', fontWeight: 400, color: 'var(--lofi-color8)', lineHeight: '32px', fontFamily: "'Google Sans Flex', sans-serif", marginTop: '4px' }}>
-                  {displaySubtitle}
-                </div>
-              </div>
-
-              {/* Suggestions buttons */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
-                {displayAction1 && (
-                  <button style={{
-                    alignSelf: 'flex-start',
-                    backgroundColor: 'var(--lofi-tint-color1)',
-                    border: 'none',
-                    borderRadius: '50px',
-                    padding: '8px 16px',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    color: 'var(--lofi-color9)',
-                    cursor: 'pointer',
-                    fontFamily: "'Google Sans Flex', sans-serif"
-                  }}>
-                    {displayAction1}
-                  </button>
-                )}
-                {displayAction2 && (
-                  <button style={{
-                    alignSelf: 'flex-start',
-                    backgroundColor: 'var(--lofi-tint-color1)',
-                    border: 'none',
-                    borderRadius: '50px',
-                    padding: '8px 16px',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    color: 'var(--lofi-color9)',
-                    cursor: 'pointer',
-                    fontFamily: "'Google Sans Flex', sans-serif"
-                  }}>
-                    {displayAction2}
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Text Input Footer Field */}
-            <div style={{
-              border: '1px solid var(--lofi-color4)',
-              borderRadius: '10px',
-              padding: '12px',
-              backgroundColor: 'var(--lofi-surface)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px'
-            }}>
-              <div style={{ fontSize: '14px', color: 'var(--lofi-color5)', opacity: 0.5, fontFamily: "'Google Sans Flex', sans-serif" }}>
-                Type @ to ask about a tab
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="material-symbols-outlined" style={{ fontSize: '16.67px', color: 'var(--lofi-tint-color3)', cursor: 'pointer' }}>add</span>
-                <div style={{ width: '40px', height: '16px', backgroundColor: 'var(--lofi-tint-color2)', borderRadius: '4px' }} />
-              </div>
-            </div>
-
-          </div>
+          {showPrimitive && (
+            <ChromeSidePanelPrimitive 
+              displayTitle={displayTitle}
+              displaySubtitle={displaySubtitle}
+              displayAction1={displayAction1}
+              displayAction2={displayAction2}
+              animateStyle={animateStyle}
+            />
+          )}
         </div>
 
       </div>

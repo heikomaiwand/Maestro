@@ -14,6 +14,11 @@ export default function ZeroState({ onPromptSubmit, onClose, mode, isLoading, in
     }
 
     const handleGlobalKeyDown = (e) => {
+      // If focus is on another input or select (e.g., API Key modal), do not steal focus!
+      if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT')) {
+        return;
+      }
+
       // If modal is active, capture all keyboard inputs
       if (document.activeElement !== textareaRef.current) {
         if (e.key === 'Alt' || e.key === 'Control' || e.key === 'Meta' || e.key === 'Shift') return;

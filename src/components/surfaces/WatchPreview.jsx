@@ -1,7 +1,42 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDynamicClock, useAnimateIn, WatchStrapIcon, GeminiSparkIcon } from './shared';
 
-export const WatchPreview = ({ action, orchData }) => {
+const WatchPrimitive = ({ title, why, animateStyle }) => {
+  return (
+    <div 
+      style={{ 
+        width: '100%', 
+        backgroundColor: '#f7ecfe', 
+        borderRadius: '32px', 
+        padding: '20px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: '12px',
+        boxSizing: 'border-box',
+        boxShadow: '0 8px 24px rgba(86, 41, 164, 0.1)',
+        zIndex: 5,
+        ...animateStyle
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ backgroundColor: '#d9bafd', padding: '4px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '20px', height: '20px' }}>
+            <GeminiSparkIcon size={12} color="#5629a4" />
+          </div>
+          <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, fontFamily: 'Google Sans, sans-serif' }}>Gemini • now</div>
+        </div>
+        <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, fontFamily: 'Google Sans, sans-serif' }}>1m</div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <div style={{ fontSize: '18px', color: '#5629a4', fontWeight: 600, fontFamily: 'Google Sans, sans-serif' }}>{title}</div>
+        <div style={{ fontSize: '14px', color: '#7438d2', lineHeight: '1.3', fontFamily: 'Google Sans, sans-serif' }}>{why}</div>
+      </div>
+    </div>
+  );
+};
+
+export const WatchPreview = ({ action, orchData, showPrimitive }) => {
   const containerRef = useRef(null);
   const [scale, setScale] = useState(0.8);
   const currentTime = useDynamicClock(action);
@@ -84,7 +119,7 @@ export const WatchPreview = ({ action, orchData }) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: action ? 'flex-start' : 'center',
+            justifyContent: showPrimitive ? 'flex-start' : 'center',
             padding: '24px',
             boxSizing: 'border-box',
             zIndex: 3
@@ -93,42 +128,17 @@ export const WatchPreview = ({ action, orchData }) => {
           {/* Glossy Glass Reflection Layer */}
           <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0) 50%)', pointerEvents: 'none', zIndex: 10 }} />
 
-          {action ? (
+          {showPrimitive ? (
             <>
               <div style={{ fontSize: '24px', color: 'rgba(105, 145, 214, 0.4)', fontWeight: 500, marginTop: '12px', marginBottom: '16px' }}>
                 {currentTime}
               </div>
 
-              <div 
-                style={{ 
-                  width: '100%', 
-                  backgroundColor: '#f7ecfe', 
-                  borderRadius: '32px', 
-                  padding: '20px', 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  gap: '12px',
-                  boxSizing: 'border-box',
-                  boxShadow: '0 8px 24px rgba(86, 41, 164, 0.1)',
-                  zIndex: 5,
-                  ...animateStyle
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ backgroundColor: '#d9bafd', padding: '4px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '20px', height: '20px' }}>
-                      <GeminiSparkIcon size={12} color="#5629a4" />
-                    </div>
-                    <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, fontFamily: 'Google Sans, sans-serif' }}>Gemini • now</div>
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#c597ff', fontWeight: 500, fontFamily: 'Google Sans, sans-serif' }}>1m</div>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <div style={{ fontSize: '18px', color: '#5629a4', fontWeight: 600, fontFamily: 'Google Sans, sans-serif' }}>{displayTitle}</div>
-                  <div style={{ fontSize: '14px', color: '#7438d2', lineHeight: '1.3', fontFamily: 'Google Sans, sans-serif' }}>{displayWhy}</div>
-                </div>
-              </div>
+              <WatchPrimitive 
+                title={displayTitle}
+                why={displayWhy}
+                animateStyle={animateStyle}
+              />
             </>
           ) : (
             <div style={{ fontSize: '80px', color: 'rgba(105, 145, 214, 0.25)', fontWeight: 500, letterSpacing: '-2px' }}>

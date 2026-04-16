@@ -7,7 +7,35 @@ import LogicMapping from './components/LogicMapping'
 import ZeroState from './components/ZeroState'
 import ApiKeyModal from './components/ApiKeyModal'
 import DebugModal from './components/DebugModal'
+import GuidedTour from './components/GuidedTour'
 import { initialSignals, initialActions, initialSelectedAction, generateDataFromPrompt } from './services/simulationService'
+
+const TOUR_STEPS = [
+  {
+    targetId: 'tour-col1',
+    title: 'How might we know this?',
+    description: 'A list of all of the possible sources that Google could ingest to understand the user\'s world context to understand this scenario.',
+    arrowPosition: 'left'
+  },
+  {
+    targetId: 'tour-col2',
+    title: 'The most useful action/suggestion',
+    description: 'Given this scenario, what are the most helpful things that Google and Gemini could do or suggest on behalf of the user.',
+    arrowPosition: 'left'
+  },
+  {
+    targetId: 'tour-col3',
+    title: 'Communicating with the user',
+    description: 'The orchestration to determine when, where, and how to communicate with the user across all potential touchpoints. Some are immediate, others are contextual.',
+    arrowPosition: 'right'
+  },
+  {
+    targetId: 'tour-edit-prompt',
+    title: 'Try others',
+    description: 'Describe other scenarios to see how a omni-present and omni-channel agent might be helpful.',
+    arrowPosition: 'bottom'
+  }
+];
 
 function App() {
   const [showApiKeyModal, setShowApiKeyModal] = useState(() => {
@@ -29,6 +57,8 @@ function App() {
   const [leftWidth, setLeftWidth] = useState(40) // 40% by default so col1 and col2 are 20% each, col3 is 60%
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [storedLeftWidth, setStoredLeftWidth] = useState(40)
+  const [isTourActive, setIsTourActive] = useState(false)
+  const [hasCompletedTour, setHasCompletedTour] = useState(() => localStorage.getItem('hasCompletedTour') === 'true')
 
   const handleFullScreenToggle = () => {
     if (isFullScreen) {
@@ -177,13 +207,18 @@ function App() {
       setTimeout(() => setFadeStage(1), 600)
       setTimeout(() => setFadeStage(2), 900)
       setTimeout(() => setFadeStage(3), 1200)
+      
+      const shouldShowTour = localStorage.getItem('showGuidedTour')
+      if (shouldShowTour === 'true' || shouldShowTour === null) {
+        setTimeout(() => setIsTourActive(true), 1500)
+      }
     } catch (error) {
       console.error('Failed to generate data:', error)
       setSignals([])
       setActions([])
       setSelectedAction(null)
       setIsZeroState(false)
-      setErrorSnackbar("Context generation failed. Please refine your scenario and try again.")
+      setErrorSnackbar("API call failed. Servers might be busy or you may be offline.")
     } finally {
 
       setIsLoading(false)
@@ -218,7 +253,14 @@ function App() {
           selectedAction={selectedAction} 
         />
       )}
-      <TopBar onClearApiKey={handleClearApiKey} onDebugClick={() => setShowDebugModal(true)} />
+      <TopBar 
+        onClearApiKey={handleClearApiKey} 
+        onDebugClick={() => setShowDebugModal(true)} 
+        onShowTour={() => {
+          localStorage.setItem('showGuidedTour', 'true');
+          setIsTourActive(true);
+        }}
+      />
 
       {isZeroState && (
         <ZeroState 
@@ -234,7 +276,7 @@ function App() {
       <div className="main-content">
         <div className="left-pane" style={{ flexDirection: 'column', flex: `0 0 ${leftWidth}%`, borderRight: 'none', overflow: 'hidden', opacity: isFullScreen ? 0 : 1, transition: 'flex 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s ease-out' }}>
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fadeStage >= 1 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
+            <div id="tour-col1" style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fadeStage >= 1 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
               <SignalColumn 
                 signals={signals} 
                 onDeleteSignal={handleDeleteSignal}
@@ -246,7 +288,7 @@ function App() {
               />
             </div>
             <div className="divider-vertical"></div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fadeStage >= 2 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
+            <div id="tour-col2" style={{ flex: 1, display: 'flex', flexDirection: 'column', opacity: fadeStage >= 2 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
               <ActionColumn 
                 actions={actions} 
                 selectedAction={selectedAction} 
@@ -257,6 +299,7 @@ function App() {
           
           <div style={{ borderTop: '1px solid var(--sys-color-outline-variant)', padding: '8px', display: 'flex', justifyContent: 'center' }}>
             <button 
+              id="tour-edit-prompt"
               className="btn btn-tonal" 
               onClick={() => { setIsZeroState(true); setZeroStateMode('reset'); }}
             >
@@ -281,7 +324,7 @@ function App() {
           />
         )}
 
-        <div className="column3" style={{ flex: 1, opacity: fadeStage >= 3 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
+        <div id="tour-col3" className="column3" style={{ flex: 1, opacity: fadeStage >= 3 ? 1 : 0, transition: 'opacity 0.6s ease-in', overflow: 'hidden' }}>
           {showLogic ? (
             <LogicMapping 
               selectedAction={selectedAction}
@@ -348,7 +391,18 @@ function App() {
             </span>
           </div>
         )}
-
+        {isTourActive && (
+          <GuidedTour 
+            steps={TOUR_STEPS} 
+            onComplete={() => {
+              setIsTourActive(false);
+              localStorage.setItem('showGuidedTour', 'false');
+            }} 
+            onClose={() => {
+              setIsTourActive(false);
+            }}
+          />
+        )}
       </div>
 
     </div>
