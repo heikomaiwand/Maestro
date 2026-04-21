@@ -15,7 +15,7 @@ import { PixelLauncherDiscoverPreview } from './surfaces/PixelLauncherDiscoverPr
 import { ChromeSidePanelPreview } from './surfaces/ChromeSidePanelPreview';
 import { ChromeNewTabPreview } from './surfaces/ChromeNewTabPreview';
 import { ChromebookOsPreview } from './surfaces/ChromebookOsPreview';
-import { GoogletvStreamerPreview } from './surfaces/GoogletvStreamerPreview';
+import { SmartTvPreview } from './surfaces/SmartTvPreview';
 import { GoogleCalendarPreview } from './surfaces/GoogleCalendarPreview';
 import { GoogleChatPreview } from './surfaces/GoogleChatPreview';
 import { GenericSurfacePlaceholder } from './surfaces/shared';
@@ -42,7 +42,7 @@ export const getSurfacePreviewComponent = (surfaceId, action, cache = {}) => {
     case 'chrome_side_panel': return <ChromeSidePanelPreview action={action} orchData={orchData} showPrimitive={isActive} />;
     case 'chrome_new_tab': return <ChromeNewTabPreview action={action} orchData={orchData} showPrimitive={isActive} />;
     case 'chromebook_os': return <ChromebookOsPreview action={action} orchData={orchData} showPrimitive={isActive} />;
-    case 'googletv_streamer': return <GoogletvStreamerPreview action={action} orchData={orchData} showPrimitive={isActive} />;
+    case 'googletv_streamer': return <SmartTvPreview action={action} orchData={orchData} showPrimitive={isActive} />;
     case 'google_calendar': return <GoogleCalendarPreview action={action} orchData={orchData} showPrimitive={isActive} />;
     case 'google_chat': return <GoogleChatPreview action={action} orchData={orchData} showPrimitive={isActive} />;
     default: return <GenericSurfacePlaceholder label="Unknown surface" />;

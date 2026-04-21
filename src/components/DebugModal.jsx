@@ -3,6 +3,8 @@ import { geminiDebugCache } from '../services/geminiService';
 
 export default function DebugModal({ onClose, selectedAction }) {
   const [activeTab, setActiveTab] = useState('loop1');
+  const [loop1Expanded, setLoop1Expanded] = useState(false);
+  const [loop2Expanded, setLoop2Expanded] = useState(false);
 
   const loop1Data = geminiDebugCache.loop1;
   const loop2Data = selectedAction ? geminiDebugCache.loop2[selectedAction.id] : null;
@@ -120,19 +122,39 @@ export default function DebugModal({ onClose, selectedAction }) {
                 </div>
 
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '8px', fontSize: '13px', textTransform: 'uppercase', color: 'var(--sys-color-outline)' }}>System Instruction</div>
-                  <pre style={{
-                    margin: 0,
-                    padding: '16px',
-                    borderRadius: '12px',
-                    backgroundColor: 'var(--sys-color-surface-container-high)',
-                    color: 'var(--sys-color-on-surface)',
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-word',
-                    fontSize: '13px',
-                    fontFamily: 'sans-serif',
-                    lineHeight: '1.5'
-                  }}>{loop1Data.systemInstruction}</pre>
+                  <div 
+                    onClick={() => setLoop1Expanded(!loop1Expanded)}
+                    style={{ 
+                      fontWeight: 600, 
+                      marginBottom: '8px', 
+                      fontSize: '13px', 
+                      textTransform: 'uppercase', 
+                      color: 'var(--sys-color-outline)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    <span>System Instruction</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
+                      {loop1Expanded ? 'expand_less' : 'expand_more'}
+                    </span>
+                  </div>
+                  {loop1Expanded && (
+                    <pre style={{
+                      margin: 0,
+                      padding: '16px',
+                      borderRadius: '12px',
+                      backgroundColor: 'var(--sys-color-surface-container-high)',
+                      color: 'var(--sys-color-on-surface)',
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word',
+                      fontSize: '13px',
+                      fontFamily: 'sans-serif',
+                      lineHeight: '1.5'
+                    }}>{loop1Data.systemInstruction}</pre>
+                  )}
                 </div>
 
                 <div>
@@ -179,19 +201,39 @@ export default function DebugModal({ onClose, selectedAction }) {
                 </div>
 
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '8px', fontSize: '13px', textTransform: 'uppercase', color: 'var(--sys-color-outline)' }}>System Instruction</div>
-                  <pre style={{
-                    margin: 0,
-                    padding: '16px',
-                    borderRadius: '12px',
-                    backgroundColor: 'var(--sys-color-surface-container-high)',
-                    color: 'var(--sys-color-on-surface)',
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-word',
-                    fontSize: '13px',
-                    fontFamily: 'sans-serif',
-                    lineHeight: '1.5'
-                  }}>{loop2Data.systemInstruction}</pre>
+                  <div 
+                    onClick={() => setLoop2Expanded(!loop2Expanded)}
+                    style={{ 
+                      fontWeight: 600, 
+                      marginBottom: '8px', 
+                      fontSize: '13px', 
+                      textTransform: 'uppercase', 
+                      color: 'var(--sys-color-outline)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    <span>System Instruction</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
+                      {loop2Expanded ? 'expand_less' : 'expand_more'}
+                    </span>
+                  </div>
+                  {loop2Expanded && (
+                    <pre style={{
+                      margin: 0,
+                      padding: '16px',
+                      borderRadius: '12px',
+                      backgroundColor: 'var(--sys-color-surface-container-high)',
+                      color: 'var(--sys-color-on-surface)',
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word',
+                      fontSize: '13px',
+                      fontFamily: 'sans-serif',
+                      lineHeight: '1.5'
+                    }}>{loop2Data.systemInstruction}</pre>
+                  )}
                 </div>
 
                 <div>

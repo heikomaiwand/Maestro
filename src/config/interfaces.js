@@ -124,8 +124,8 @@ export const SURFACES = [
     primitiveContent: [
       'Headline (max 60 characters)',
       'Subheading (max 150 characters)',
-      'Action 1 (max 16 characters)',
-      'Action 2 (max 16 characters)'
+      'Action 1 (max 16 characters)', //Optional
+      'Action 2 (max 16 characters)' //Optional
     ]
   },
   {
@@ -154,7 +154,7 @@ export const SURFACES = [
     primitiveContent: [
       'Headline (max 60 characters)',
       'Subheading (max 120 characters)',
-      'Action 1 (max 16 characters)'
+      'Action 1 (max 16 characters)' //Optional
     ]
   },
   {
@@ -168,7 +168,9 @@ export const SURFACES = [
     interactivity: 'Low interaction. Relies purely on D-pad navigation on a remote control.',
     primitiveContent: [
       'Headline (max 60 characters)',
-      'Subheading (max 80 characters)'
+      'Subheading (max 80 characters)',
+      'Action 1 (max 16 characters)', //Optional
+      'Action 2 (max 16 characters)' //Optional
     ]
   },
   {
@@ -201,7 +203,7 @@ export const SURFACES = [
       'Subheading (max 100 characters)',
       'Start time',
       'End Time',
-      'Action 1 (max 16 characters)',
+      'Action 1 (max 16 characters)'
 
     ]
   },
