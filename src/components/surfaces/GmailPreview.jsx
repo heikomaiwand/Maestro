@@ -1,8 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useAnimateIn, GeminiSparkIcon } from './shared';
 
-export const GmailPreview = ({ action }) => {
+export const GmailPreview = ({ action, orchData, showPrimitive }) => {
   const containerRef = useRef(null);
   const [scale, setScale] = useState(0.6);
+  const animateStyle = useAnimateIn(action);
+
+  const howData = orchData && orchData.how ? orchData.how : null;
+  const specific = howData ? (howData.gmail || howData) : null;
+
+  const displayTitle = specific ? (specific.headline || specific.Headline || specific.title || action?.title || 'Header') : (action?.title || 'Header');
+  const displaySubtitle = specific ? (specific.subheading || specific.Subheading || specific.message || action?.why || 'Subheading') : (action?.why || 'Subheading');
+  const displayAction1 = specific ? (specific.action1 || specific.Action1 || specific['Action 1'] || specific.Action || '') : 'Action1';
+  const displayAction2 = specific ? (specific.action2 || specific.Action2 || specific['Action 2'] || '') : 'Action2';
 
   useEffect(() => {
     const updateScale = () => {
@@ -163,6 +173,47 @@ export const GmailPreview = ({ action }) => {
                   </div>
                 </div>
               </div>
+
+              {showPrimitive && (
+                <div 
+                  style={{ 
+                    backgroundColor: 'var(--lofi-color2)', 
+                    border: '1px solid var(--lofi-color3)', 
+                    borderRadius: '16px', 
+                    margin: '16px',
+                    padding: '16px', 
+                    display: 'flex', 
+                    gap: '16px', 
+                    alignItems: 'flex-start', 
+                    boxSizing: 'border-box',
+                    boxShadow: '0 4px 12px rgba(86, 41, 164, 0.05)',
+                    ...animateStyle
+                  }}
+                >
+                  {/* Spark Icon */}
+                  <div style={{ backgroundColor: 'var(--lofi-color4)', padding: '3px', borderRadius: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', flexShrink: 0 }}>
+                    <GeminiSparkIcon size={16} color="#ffffff" />
+                  </div>
+
+                  {/* Details */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: '16px', color: 'var(--lofi-color9)', fontWeight: 600, fontFamily: "'Google Sans Flex', sans-serif" }}>
+                      {displayTitle}
+                    </div>
+                    <div style={{ fontSize: '14px', color: 'var(--lofi-color8)', lineHeight: '1.3', fontFamily: "'Google Sans Flex', sans-serif" }}>
+                      {displaySubtitle}
+                    </div>
+                    
+                    {/* Actions */}
+                    {(displayAction1 || displayAction2) && (
+                      <div style={{ display: 'flex', gap: '24px', marginTop: '8px', fontSize: '14px', color: 'var(--lofi-color9)', fontWeight: 600, fontFamily: "'Google Sans Text', sans-serif" }}>
+                        {displayAction1 && <div style={{ cursor: 'pointer' }}>{displayAction1}</div>}
+                        {displayAction2 && <div style={{ cursor: 'pointer' }}>{displayAction2}</div>}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div style={{ height: '56px', display: 'flex', alignItems: 'center', borderBottom: '1px solid var(--lofi-container5)', paddingLeft: '16px', gap: '32px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', height: '100%', borderBottom: '3px solid var(--lofi-text2)' }}>

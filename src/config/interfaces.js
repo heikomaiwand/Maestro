@@ -199,11 +199,10 @@ export const SURFACES = [
     private: true,
     interactivity: 'Medium interaction. Allows quick schedule adjustments or confirmations.',
     primitiveContent: [
-      'Headline (max 60 characters)',
-      'Subheading (max 100 characters)',
-      'Start time',
-      'End Time',
-      'Action 1 (max 16 characters)'
+      'Event name (max 60 characters)',
+      'Start time', // Format: 2:00 PM
+      'End Time', // Format: 3:00 PM
+      'Action 1 (max 16 characters)' //Optional. Think "Accept" or "Reschedule"
 
     ]
   },

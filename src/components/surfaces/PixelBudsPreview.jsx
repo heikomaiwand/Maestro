@@ -66,10 +66,13 @@ const PixelBudsPrimitive = ({ text, animateStyle }) => {
 };
 
 export const PixelBudsPreview = ({ action, orchData, showPrimitive }) => {
-
   const containerRef = useRef(null);
   const [scale, setScale] = useState(1);
   const animateStyle = useAnimateIn(action);
+
+  const howData = orchData && orchData.how ? orchData.how : null;
+  const specific = howData ? (howData.pixel_buds || howData) : null;
+  const displayTTS = specific ? (specific['text-to-speech'] || specific['Text-to-speech'] || specific.text_to_speech || specific.TextToSpeech || specific.message || action?.why || 'Spoken cue') : (action?.why || 'Spoken cue');
 
   useEffect(() => {
     const updateScale = () => {
@@ -127,9 +130,7 @@ export const PixelBudsPreview = ({ action, orchData, showPrimitive }) => {
         {/* Floating Spoken Cue layer */}
         {showPrimitive && (
           <PixelBudsPrimitive 
-            text={orchData && orchData.how && (orchData.how.pixel_buds || orchData.how) 
-              ? ((orchData.how.pixel_buds && (orchData.how.pixel_buds["Text-to-speech"] || orchData.how.pixel_buds.TextToSpeech || orchData.how.pixel_buds.text_to_speech)) || (orchData.how && (orchData.how["Text-to-speech"] || orchData.how.TextToSpeech || orchData.how.text_to_speech)) || action?.why || 'Spoken cue') 
-              : (action?.why || 'Spoken cue')}
+            text={displayTTS}
             animateStyle={animateStyle}
           />
         )}

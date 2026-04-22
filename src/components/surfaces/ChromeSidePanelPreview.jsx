@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useAnimateIn } from './shared';
+import { useAnimateIn, GeminiSparkIcon } from './shared';
 
 const ChromeSidePanelPrimitive = ({ displayTitle, displaySubtitle, displayAction1, displayAction2, animateStyle }) => {
   return (
@@ -41,7 +41,7 @@ const ChromeSidePanelPrimitive = ({ displayTitle, displaySubtitle, displayAction
           justifyContent: 'center',
           boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
         }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: 'var(--lofi-color4)', borderRadius: '50%' }} />
+          <GeminiSparkIcon size={20} color="var(--lofi-color4)" />
         </div>
         
         {/* Title */}
@@ -56,7 +56,7 @@ const ChromeSidePanelPrimitive = ({ displayTitle, displaySubtitle, displayAction
       </div>
 
       {/* Suggestions buttons */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px', marginBottom: '16px' }}>
         {displayAction1 && (
           <button style={{
             alignSelf: 'flex-start',
@@ -167,7 +167,7 @@ export const ChromeSidePanelPreview = ({ action, orchData, showPrimitive }) => {
           transition: 'transform 0.1s ease-out',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--lofi-surface)',
           borderRadius: '8px',
           boxShadow: '0 12px 32px rgba(0,0,0,0.08)',
           border: '1px solid var(--lofi-outline)',

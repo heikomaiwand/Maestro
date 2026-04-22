@@ -9,6 +9,7 @@ export const SUGGESTED_PROMPTS = [
   "My dad is wearing a Pixel Watch. He lives alone in rural Japan. He is having a heart attack. I'm in the US. I am cooking in my kitchen. I have a family group chat with family members in Japan",
   "I'm on a run with just my watch. I'm a quarter of the way though my usual route. My daughter arrives home early and can't get in because she doesn't have a key",
   "I'm in the living room watching TV. My dog is in the backyard. A bear is approaching the backyard",
+  "I just got an announcement email about a new festival that I attended last year. I'm currently in an Uber",
   "I'm in my garage working on a project. I ask \"Hey Google, open the garage door\". There is a bear right outside my garage door",
   "I'm filing my taxes on TurboTax's website on my computer. It asks for information I don't know. I have that information saved on my Google Drive"
 ];
